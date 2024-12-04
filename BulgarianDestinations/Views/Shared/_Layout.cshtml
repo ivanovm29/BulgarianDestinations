@@ -33,44 +33,7 @@
             </a>
 
             <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a class="active" asp-area="" asp-controller="Home" asp-action="Index">Начало<br></a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Карта</a></li>
-                    <li class="dropdown">
-                        <a asp-area="" asp-controller="Home" asp-action="Index"><span>Области</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Благоевград</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Бургас</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Варна</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Велико Търново</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Видин</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Враца</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Габрово</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Добрич</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Кърджали</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Кюстендил</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Ловеч</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Монтана</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Пазарджик</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Перник</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Плевен</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Пловдив</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Разград</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Русе</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Силистра</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Сливен</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Смолян</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">София - Град</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">София - Област</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Стара Загора</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Търговище</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Хасково</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Шумен</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Ямбол</a></li>
-                        </ul>
-                    </li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Излез</a></li>
-                </ul>
+                @await Component.InvokeAsync(nameof(MainMenuComponent))
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
