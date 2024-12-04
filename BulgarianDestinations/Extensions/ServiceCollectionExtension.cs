@@ -1,4 +1,4 @@
-﻿using BulgarianDestinations.Data;
+﻿using BulgarianDestinations.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
