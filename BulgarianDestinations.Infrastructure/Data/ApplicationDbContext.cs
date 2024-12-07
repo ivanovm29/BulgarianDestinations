@@ -1,4 +1,5 @@
 ﻿using BulgarianDestinations.Infrastructure.Data.Models;
+using BulgarianDestinations.Infrastructure.Data.Models.SeedDb;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +14,16 @@ namespace BulgarianDestinations.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Destination>()
-                .HasOne(d => d.Region)
-                .WithMany(c => c.Destinations)
-                .HasForeignKey(d => d.RegionId)
-                .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.Entity<Comment>()
                 .HasOne(c => c.Destination)
                 .WithMany(d => d.Comments)
                 .HasForeignKey(c => c.DestinationId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.ApplyConfiguration(new RegionConfiguration());
+            builder.ApplyConfiguration(new DestinationConfiguration());
 
             base.OnModelCreating(builder);
         }
