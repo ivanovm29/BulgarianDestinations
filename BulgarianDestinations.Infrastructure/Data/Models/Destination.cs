@@ -33,5 +33,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
+
     }
 }
