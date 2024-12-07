@@ -21,9 +21,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [Required]
         public string UserId { get; set; } = string.Empty;
 
-        [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; } = null!;
-
         [Required]
         public int DestinationId { get; set; }
 

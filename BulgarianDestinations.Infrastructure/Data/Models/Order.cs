@@ -19,7 +19,5 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [ForeignKey(nameof(PersonId))]
         public Person Person { get; set; } = null!;
 
-        public List<Articul> Cart { get; set; } = new List<Articul>();
-
     }
 }
