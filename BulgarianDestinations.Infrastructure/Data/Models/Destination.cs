@@ -31,7 +31,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [ForeignKey(nameof(RegionId))]
         public Region Region { get; set; } = null!;
 
-        [Required]
         public List<Comment> Comments { get; set; } = new List<Comment>();
 
     }
