@@ -10,6 +10,9 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using BulgarianDestinations.Controllers;
+using BulgarianDestinations.Core.Contracts;
+using BulgarianDestinations.Core.Services;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +24,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using static BulgarianDestinations.Infrastructure.Data.Constants.DataConstants;
 
+
 namespace BulgarianDestinations.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -31,13 +35,16 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IPersonService personService;
+
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IPersonService _personService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +52,8 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            personService = _personService;
+
         }
 
         /// <summary>
@@ -151,6 +160,8 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+
+                    _ = personService.CreateAsync(user.Id);
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -160,6 +171,8 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
+
                 }
                 foreach (var error in result.Errors)
                 {
