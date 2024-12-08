@@ -30,6 +30,12 @@
             </div>
 
             <div class="form-group">
+                <label for="exampleInputEmail1">Телефон</label>
+                <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="phone-number" aria-required="true" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label for="exampleInputEmail1">Парола</label>
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>

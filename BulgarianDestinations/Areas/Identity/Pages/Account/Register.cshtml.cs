@@ -119,6 +119,14 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
             [StringLength(UserLastNameMaxLength, MinimumLength = UserLastNameMinLength)]
             public string LastName { get; set; }
 
+            [Required]
+            [StringLength(10, ErrorMessage = "The telephone number must be 10 characters long.", MinimumLength = 10)]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+
+
 
         }
 
@@ -139,6 +147,7 @@ namespace BulgarianDestinations.Areas.Identity.Pages.Account
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.PhoneNumber = Input.PhoneNumber;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
