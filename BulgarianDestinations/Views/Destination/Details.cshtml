@@ -1,0 +1,29 @@
+﻿@model DestinationViewModel
+@{
+    ViewData["Title"] = "Region";
+    var destination = Model;
+}
+
+    <div class="row" id="info-top">
+        <div class="col-md-6 text-center" id="title-info">
+            <h2>@destination.Name</h2>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-success" id="button" href="#" role="button">
+                <h2>Посети</h2>
+            </a>
+        </div>
+    </div>
+
+    <div class="row" id="info-mid">
+        <div class="col-lg-6">
+            <p id="info-text">
+                @destination.Description
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <img src="@destination.ImageUrl" class="img-fluid" id="info-img" alt="">
+        </div>
+    </div>
+}
+
