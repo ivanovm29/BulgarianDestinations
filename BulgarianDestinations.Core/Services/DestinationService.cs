@@ -20,8 +20,7 @@ namespace BulgarianDestinations.Core.Services
         }
         public async Task<DestinationViewModel> DestinationInformation(int id)
         {
-
-            return await repository
+            var destination = await repository
                 .All<Destination>()
                 .Where(d => d.Id == id)
                 .Select(d => new DestinationViewModel
@@ -30,9 +29,13 @@ namespace BulgarianDestinations.Core.Services
                     Name = d.Name,
                     Description = d.Description,
                     ImageUrl = d.ImageUrl,
-                    RegionId = d.RegionId
+                    RegionId = d.RegionId,
+                    Repository = repository
+                    
                 })
-                .FirstOrDefaultAsync(); 
+                .FirstOrDefaultAsync();
+            return destination;
         }
+
     }
 }

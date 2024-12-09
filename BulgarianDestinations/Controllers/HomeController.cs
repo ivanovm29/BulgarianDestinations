@@ -21,7 +21,7 @@ namespace BulgarianDestinations.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public async Task<IActionResult> RegionDetails(int regionId)
         {
             var model = await regionService.GetAll(regionId);

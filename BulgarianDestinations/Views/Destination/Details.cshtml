@@ -1,18 +1,33 @@
 ﻿@model DestinationViewModel
 @{
+
     ViewData["Title"] = "Region";
     var destination = Model;
+    int userId = await Model.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    bool isContain = await Model.IsContain(Model.Id, userId);
+
 }
 
     <div class="row" id="info-top">
         <div class="col-md-6 text-center" id="title-info">
             <h2>@destination.Name</h2>
         </div>
-        <div class="col-md-6 text-center">
-            <a class="btn btn-success" id="button" href="#" role="button">
+    @if (isContain == false)
+    {
+    <div class="col-md-6 text-center">
+        <a asp-controller="Destination" asp-action="Join" asp-route-destinationid="@destination.Id" class="btn btn-success" id="button" role="button">
                 <h2>Посети</h2>
             </a>
         </div>
+    }
+    @if(isContain == true)
+    {
+        <div class="col-md-6 text-center">
+            <a asp-controller="Destination" asp-action="Leave" asp-route-destinationid="@destination.Id" class="btn btn-success" id="button" role="button">
+                <h2>Отмени</h2>
+            </a>
+        </div>
+    }
     </div>
 
     <div class="row" id="info-mid">
