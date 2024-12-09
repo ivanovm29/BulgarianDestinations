@@ -22,6 +22,18 @@ namespace BulgarianDestinations.Infrastructure.Data
                 .HasForeignKey(c => c.DestinationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<DestinationPerson>()
+                .HasKey(sp => new { sp.DestinationId, sp.PersonId });
+
+            builder.Entity<DestinationPerson>()
+                .HasOne(s => s.Destination)
+                .WithMany(s => s.DestinationsPersons)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
+
             builder.ApplyConfiguration(new RegionConfiguration());
             builder.ApplyConfiguration(new DestinationConfiguration());
 

@@ -14,5 +14,13 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
 
         Task AddAsync<T>(T entity) where T : class;
         Task<int> SaveChangesAsync();
+
+        Task<T?> GetById<T>(object id) where T : class;
+
+        Task<T?> GetByIdCollection<T>(int id, int id1) where T : class;
+
+        Task DeleteAsync<T>(object id) where T : class;
+
+        Task DeleteCollectionAsync<T>(int id, int id1) where T : class;
     }
 }

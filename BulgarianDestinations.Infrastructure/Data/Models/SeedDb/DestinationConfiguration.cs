@@ -18,6 +18,7 @@ namespace BulgarianDestinations.Infrastructure.Data.Models.SeedDb
                 .HasForeignKey(d => d.RegionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
             var data = new SeedData();
 
             builder.HasData(new Destination[]

@@ -39,5 +39,34 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
         {
             return await context.SaveChangesAsync();
         }
+
+        public async Task<T?> GetById<T>(object id) where T : class
+        {
+            return await DbSet<T>().FindAsync(id);
+        }
+
+        public async Task<T?> GetByIdCollection<T>(int id, int id1) where T : class
+        {
+            return await DbSet<T>().FindAsync(id, id1);
+        }
+
+        public async Task DeleteAsync<T>(object id) where T : class
+        {
+            T? entity = await GetById<T>(id);
+
+            if(entity != null) 
+            {
+                DbSet<T>().Remove(entity);
+            }
+        }
+        public async Task DeleteCollectionAsync<T>(int id, int id1) where T : class
+        {
+            T? entity = await GetByIdCollection<T>(id, id1);
+
+            if (entity != null)
+            {
+                DbSet<T>().Remove(entity);
+            }
+        }
     }
 }

@@ -19,8 +19,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [ForeignKey(nameof(UserId))]
         public ApplicationUser User { get; set; } = null!;
 
-        public List<Destination> Destinations { get; set; } = new List<Destination>();
-
         public List<Articul> Cart { get; set; } = new List<Articul>();
     }
 }

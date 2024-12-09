@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,6 +31,8 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
 
         [ForeignKey(nameof(RegionId))]
         public Region Region { get; set; } = null!;
+
+        public ICollection<DestinationPerson> DestinationsPersons { get; set; } = new List<DestinationPerson>();
 
         public List<Comment> Comments { get; set; } = new List<Comment>();
 

@@ -181,15 +181,10 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RegionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.HasIndex("RegionId");
 
@@ -513,7 +508,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                             Id = 3,
                             Description = "Най-малкият град в България (208 души), Мелник, е скътан в южните склонове на Пирин, сред пясъчни пирамиди с причудливи форми. Намира се в община Сандански, област Благоевград, на 175 км южно от София и само на около 30 км от границата с Гърция. Намерените при археологическите разкопки находки от античността свидетелстват за многовековната му история.\r\nБлизо до града се намират Мелнишките пирамиди. Представляват уникално природно образувание, което привлича туристи от цял свят. Смята се, че този си вид пирамидите са придобили при ерозия на глинената почва. Мелнишките пирамиди са в процес на оформление и външният им вид и форма се променят с течение на времето. Освен пирамидалната форма, пясъчните образувания имат форма на гъби, конуси, игли и др. Височината на пирамидите достига 100 м. Характерно за Мелнишките пирамиди е, че наклоните са пясъчни, на места напълно вертикални, а по върховете растат широколистни растения и треви.",
                             ImageUrl = "https://i.ibb.co/vzVkHJh/Melnik.jpg",
-                            Name = "17 Мелник",
+                            Name = "Мелник",
                             RegionId = 1
                         },
                         new
@@ -756,6 +751,21 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                             Name = "Зимзелен - каменната сватба",
                             RegionId = 9
                         });
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.DestinationPerson", b =>
+                {
+                    b.Property<int>("DestinationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DestinationId", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("DestinationPerson");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Order", b =>
@@ -1112,10 +1122,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Destination", b =>
                 {
-                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", null)
-                        .WithMany("Destinations")
-                        .HasForeignKey("PersonId");
-
                     b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Region", "Region")
                         .WithMany("Destinations")
                         .HasForeignKey("RegionId")
@@ -1123,6 +1129,25 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.DestinationPerson", b =>
+                {
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Destination", "Destination")
+                        .WithMany("DestinationsPersons")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Order", b =>
@@ -1201,13 +1226,13 @@ namespace BulgarianDestinations.Infrastructure.Migrations
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Destination", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("DestinationsPersons");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Person", b =>
                 {
                     b.Navigation("Cart");
-
-                    b.Navigation("Destinations");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Region", b =>
