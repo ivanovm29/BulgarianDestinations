@@ -40,5 +40,15 @@
             <img src="@destination.ImageUrl" class="img-fluid" id="info-img" alt="">
         </div>
     </div>
+    <div class="col-md-12 text-center" id="info-new-comment">
+    <a asp-controller="Comment" asp-action="Add" asp-route-destinationid="@destination.Id" asp-route-personid="@userId">
+            <h2>Напиши коментар</h2>
+        </a>
+    </div>
+        <div class="col-md-6 text-center">
+    <a asp-controller="Comment" asp-action="All" asp-route-destinationid="@destination.Id" class="btn btn-success" id="button" role="button">
+                <h2>Коментари</h2>
+            </a>
+        </div>
 }
 

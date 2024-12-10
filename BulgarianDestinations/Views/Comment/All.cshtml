@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CommentViewModel>
+@{
+    ViewData["Title"] = "Comment";
+    var comments = Model.ToList();
+    
+}
+
+<div class="row">
+    
+    <div class="col-md-12 text-center" id="info-new-comment">
+        <h2>Коментари</h2>
+    </div>
+    <div class="col-md-12" id="info-comments">
+        
+
+            <ul class="list-unstyled">
+            @for (int i = 0; i < comments.Count(); i++)
+            {
+                var comment = comments[i];
+                var fullName = comment.FirstName + " " + comment.LastName;
+            <li class="media my-4">
+                <div class="media-body">
+                    <h4>@fullName</h4>
+                    @comment.Text
+                </div>
+            </li>
+            }
+        </ul>
+        
+    </div>
+</div>
+

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
-    public partial class db1 : Migration
+    public partial class addComment : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -258,7 +258,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
                     DestinationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -270,6 +270,12 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         principalTable: "Destination",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,6 +296,30 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_DestinationPerson_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommentPerson",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentPerson", x => new { x.CommentId, x.PersonId });
+                    table.ForeignKey(
+                        name: "FK_CommentPerson_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CommentPerson_People_PersonId",
                         column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
@@ -460,9 +490,19 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommentPerson_PersonId",
+                table: "CommentPerson",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_DestinationId",
                 table: "Comments",
                 column: "DestinationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PersonId",
+                table: "Comments",
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Destination_RegionId",
@@ -506,7 +546,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "CommentPerson");
 
             migrationBuilder.DropTable(
                 name: "DestinationPerson");
@@ -516,6 +556,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Destination");

@@ -143,20 +143,36 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.Property<int>("DestinationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DestinationId");
 
+                    b.HasIndex("PersonId");
+
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.CommentPerson", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentId", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("CommentPerson");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Destination", b =>
@@ -1117,7 +1133,34 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Destination");
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.CommentPerson", b =>
+                {
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Comment", "Comment")
+                        .WithMany("CommentsPersons")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Destination", b =>
@@ -1221,6 +1264,11 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
+                {
+                    b.Navigation("CommentsPersons");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Destination", b =>

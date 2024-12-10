@@ -30,6 +30,14 @@ namespace BulgarianDestinations.Infrastructure.Data
                 .WithMany(s => s.DestinationsPersons)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<CommentPerson>()
+                .HasKey(sp => new { sp.CommentId, sp.PersonId });
+
+            builder.Entity<CommentPerson>()
+                .HasOne(s => s.Comment)
+                .WithMany(s => s.CommentsPersons)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
 
 

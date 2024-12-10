@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,12 +20,18 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         public string Text { get; set; } = string.Empty;
 
         [Required]
-        public string UserId { get; set; } = string.Empty;
+        public int PersonId { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(PersonId))]
+        public Person Person { get; set; } = null!;
 
         [Required]
         public int DestinationId { get; set; }
 
         [ForeignKey(nameof(DestinationId))]
         public Destination Destination { get; set; } = null!;
+
+        public ICollection<CommentPerson> CommentsPersons { get; set; } = new List<CommentPerson>();
     }
 }
