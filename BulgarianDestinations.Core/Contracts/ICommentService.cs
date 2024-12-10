@@ -15,6 +15,7 @@ namespace BulgarianDestinations.Core.Contracts
         Task Add(CommentViewModel model, int destinationId, int personId);
         Task<CommentViewModel> Add(int destinationId, int personId);
 
+        Task DeleteComment(int commentId);
         Task<int> GetUserId(string userId);
     }
 }

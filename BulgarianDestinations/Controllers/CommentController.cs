@@ -34,5 +34,11 @@ namespace BulgarianDestinations.Controllers
             var model = await commentService.All(destinationId);
             return View(model);
         }
+
+        public async Task<IActionResult> Delete(int commentId, int destinationId)
+        {
+            await commentService.DeleteComment(commentId);
+            return RedirectToAction("All", new { destinationId = destinationId });
+        }
     }
 }

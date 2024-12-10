@@ -72,5 +72,17 @@ namespace BulgarianDestinations.Core.Services
                 .FirstOrDefault();
             return person.Id;
         }
+
+        public async Task DeleteComment(int commentId)
+        {
+
+                //var dp = repository.GetByIdCollection<DestinationPerson>(destinationId, personId);
+
+                await repository.DeleteAsync<Comment>(commentId);
+
+                await repository.SaveChangesAsync();
+
+            
+        }
     }
 }
