@@ -44,6 +44,7 @@ namespace BulgarianDestinations.Infrastructure.Data
 
             builder.ApplyConfiguration(new RegionConfiguration());
             builder.ApplyConfiguration(new DestinationConfiguration());
+            builder.ApplyConfiguration(new ArticulConfiguration());
 
             base.OnModelCreating(builder);
         }

@@ -14,7 +14,11 @@ namespace BulgarianDestinations.Infrastructure.Data.Models.SeedDb
         {
             SeedRegions();
             SeedDestinations();
+            SeedArticuls();
         }
+        public Articul Grivna { get; set; }
+        public Articul Rakavici { get; set; }
+        public Articul Pompa { get; set; }
         private void SeedRegions()
         {
             Blagoevgrad = new Region()
@@ -803,7 +807,36 @@ namespace BulgarianDestinations.Infrastructure.Data.Models.SeedDb
 
             };
         }
+        private void SeedArticuls()
+        {
+            Grivna = new Articul()
+            {
+                Id = 1,
+                Name = "Гривна GARMIN Vivofit 3",
+                Description = "Ръкавиците улавят различни дейности като ходене, бягане, колоездене и плуване. С детектор за движение разпознава Вашите промени в движението и  запаметява дейността Ви в.\r\nGarmin vivofit 3 ви подканва да се движите, като записва всяко ваше движение, включително и бездействие. След 1 час без движение червена лента на неактивност се появява на дисплея с лек сигнал. Червената светлина се увеличава на всеки 15 минути, докато не я изчистите, като се разходите в продължение на няколко минути.\r\nVívofit 3 следи Вашия напредък 24/7, благодарение на 1-годишен живот на батерията. Автоматично следи вашата почивка, докато спите. Той е устойчив на вода, така че да можете да го носите в басейна или под душа.",
+                ImageUrl = "https://i.ibb.co/0Dmhdz1/grivna.jpg",
+                Price = 143.00M
 
+            };
+            Rakavici = new Articul()
+            {
+                Id = 2,
+                Name = "Водоустойчиви термо ръкавици",
+                Description = "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.",
+                ImageUrl = "https://i.ibb.co/q5K7mh6/rakavici.jpg",
+                Price = 23.00M
+
+            };
+            Pompa = new Articul()
+            {
+                Id = 3,
+                Name = "Помпа CAO",
+                Description = "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.",
+                ImageUrl = "https://i.ibb.co/BqBxQxB/pompa.jpg",
+                Price = 54.50M
+
+            };
+        }
     }
         
 }

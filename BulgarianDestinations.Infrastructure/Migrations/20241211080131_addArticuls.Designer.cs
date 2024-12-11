@@ -4,6 +4,7 @@ using BulgarianDestinations.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211080131_addArticuls")]
+    partial class addArticuls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,8 +109,8 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -130,32 +132,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Articuls");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Ръкавиците улавят различни дейности като ходене, бягане, колоездене и плуване. С детектор за движение разпознава Вашите промени в движението и  запаметява дейността Ви в.\r\nGarmin vivofit 3 ви подканва да се движите, като записва всяко ваше движение, включително и бездействие. След 1 час без движение червена лента на неактивност се появява на дисплея с лек сигнал. Червената светлина се увеличава на всеки 15 минути, докато не я изчистите, като се разходите в продължение на няколко минути.\r\nVívofit 3 следи Вашия напредък 24/7, благодарение на 1-годишен живот на батерията. Автоматично следи вашата почивка, докато спите. Той е устойчив на вода, така че да можете да го носите в басейна или под душа.",
-                            ImageUrl = "https://i.ibb.co/0Dmhdz1/grivna.jpg",
-                            Name = "Гривна GARMIN Vivofit 3",
-                            Price = 143.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.",
-                            ImageUrl = "https://i.ibb.co/q5K7mh6/rakavici.jpg",
-                            Name = "Водоустойчиви термо ръкавици",
-                            Price = 23.00m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.",
-                            ImageUrl = "https://i.ibb.co/BqBxQxB/pompa.jpg",
-                            Name = "Помпа CAO",
-                            Price = 54.50m
-                        });
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>

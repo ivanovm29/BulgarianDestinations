@@ -23,7 +23,7 @@ namespace BulgarianDestinations.Infrastructure.Data.Constants
         public const int CommentMaxLength = 1000;
 
         public const int ArticulDescriptionMinLength = 1;
-        public const int ArticulDescriptionMaxLength = 500;
+        public const int ArticulDescriptionMaxLength = 1000;
 
         public const string ArticulPriceMin = "0";
         public const string ArticulPriceMax = "1000";
