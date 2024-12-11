@@ -91,5 +91,16 @@ namespace BulgarianDestinations.Core.Services
             }
         }
 
+        public async Task<int> GetPercentBulgaria(int personId)
+        {
+            int total = await repository.All<Destination>().CountAsync();
+
+            int current = await repository.All<DestinationPerson>().Where(d => d.PersonId == personId).CountAsync();
+
+            int currentPercent = (int)((double)current / total * 100);
+
+            return currentPercent;
+        }
+
     }
 }

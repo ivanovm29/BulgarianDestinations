@@ -13,5 +13,7 @@ namespace BulgarianDestinations.Core.Contracts
         Task<IEnumerable<ArticulViewModel>> All(int personId);
 
         Task RemoveArticul(int articulId, int personId);
+
+        Task<decimal> TotalPrice(int personId);
     }
 }

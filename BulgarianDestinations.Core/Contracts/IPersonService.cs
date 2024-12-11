@@ -12,14 +12,14 @@ namespace BulgarianDestinations.Core.Contracts
     public interface IPersonService
     {
         Task<bool> ExistsById(string userId);
+
         Task CreateAsync(string userId);
 
         Task GetDestination(int destinationId, int personId);
+
         Task GetOutDestination(int destinationId, int personId);
 
-
-
-
+        Task<int> GetPercentBulgaria(int personId);
 
     }
 }

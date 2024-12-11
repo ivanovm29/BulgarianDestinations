@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<ArticulViewModel>
 @inject ICommentService commentService
+@inject ICartServices cartService
 @{
     ViewData["Title"] = "Cart";
     var articuls = Model.ToList();
     int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    decimal totalPrice = await cartService.TotalPrice(personId);
 }
 <div class="row align-items-center">
 
@@ -20,7 +22,16 @@
                 </a>
             </div>
         </div>
-
-
     }
+
+    <div class="row" id="info-top">
+        <div class="col-md-6 text-center" id="title-info">
+            <h2>Обща цена: @totalPrice </h2>
+        </div>
+        <div class="col-md-6 text-center">
+            <a class="btn btn-success" id="button" href="#" role="button">
+                <h2>Поръчай</h2>
+            </a>
+        </div>
+    </div>
 </div>

@@ -10,5 +10,6 @@ namespace BulgarianDestinations.Core.Contracts
     public interface IRegionService
     {
         Task<IEnumerable<DestinationViewModel>> GetAll(int regionId);
+        Task<string> GetName(int regionId);
     }
 }

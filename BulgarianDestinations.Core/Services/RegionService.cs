@@ -32,5 +32,11 @@ namespace BulgarianDestinations.Core.Services
                 })
                 .ToListAsync();
         }
+        public async Task<string> GetName(int regionId) 
+        {
+            var region = await repository.AllReadOnly<Region>().FirstOrDefaultAsync(r => r.Id == regionId);
+
+            return region?.Name ?? string.Empty;
+        }
     }
 }

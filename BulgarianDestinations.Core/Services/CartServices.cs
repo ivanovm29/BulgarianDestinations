@@ -30,6 +30,22 @@ namespace BulgarianDestinations.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<decimal> TotalPrice(int personId)
+        {
+            decimal totalPrice = 0;
+
+           var collection = await repository.AllReadOnly<ArticulPerson>().
+                Where(p => p.PersonId == personId)
+                .ToListAsync();
+            foreach (var item in collection)
+            {
+                var articul = await repository.GetById<Articul>(item.ArticulId);
+                totalPrice += articul.Price;
+            }
+
+            return totalPrice;
+        }
+
         public async Task RemoveArticul(int articulId, int personId)
         {
             await repository.DeleteCollectionAsync<ArticulPerson>(articulId, personId);
