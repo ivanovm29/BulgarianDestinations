@@ -158,19 +158,19 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulPerson", b =>
                 {
                     b.Property<int>("ArticulId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
-                    b.HasKey("ArticulId", "OrderId");
+                    b.HasKey("ArticulId", "PersonId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("PersonId");
 
-                    b.ToTable("ArticulOrder");
+                    b.ToTable("ArticulPerson");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
@@ -1169,23 +1169,23 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulPerson", b =>
                 {
                     b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Articul", "Articul")
-                        .WithMany("ArticulOrders")
+                        .WithMany("ArticulsPersons")
                         .HasForeignKey("ArticulId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Order", "Order")
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Articul");
 
-                    b.Navigation("Order");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
@@ -1331,7 +1331,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Articul", b =>
                 {
-                    b.Navigation("ArticulOrders");
+                    b.Navigation("ArticulsPersons");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>

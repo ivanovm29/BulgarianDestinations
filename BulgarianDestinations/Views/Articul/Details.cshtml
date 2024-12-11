@@ -1,5 +1,10 @@
 ﻿@model ArticulViewModel
-
+@inject ICommentService commentService
+@{
+    ViewData["Title"] = "Articuls";
+    int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+}
+int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 <div class="d-flex justify-content-center">
     
         <div class="card" style="width: 36rem;">
@@ -8,7 +13,7 @@
                 <h5 class="card-title">@Model.Name</h5>
                 <p class="card-text">@Model.Description</p>
             <h5 style="color: #000000">Цена: @Model.Price</h5>
-                <a href="#" class="btn btn-primary">Добави към количката</a>
+            <a asp-controller="Articul" asp-action="Get" asp-route-articulid="@Model.Id" asp-route-personid="@personId" class="btn btn-primary">Добави към количката</a>
             </div>
         </div>
     

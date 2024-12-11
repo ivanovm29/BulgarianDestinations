@@ -1,5 +1,4 @@
 ﻿using BulgarianDestinations.Core.Contracts;
-using BulgarianDestinations.Core.Services;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;

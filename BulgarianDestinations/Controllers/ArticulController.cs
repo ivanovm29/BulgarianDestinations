@@ -1,4 +1,5 @@
 ﻿using BulgarianDestinations.Core.Contracts;
+using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulgarianDestinations.Controllers
@@ -24,5 +25,12 @@ namespace BulgarianDestinations.Controllers
             var model = await articulService.ArticulInformation(id);
             return View(model);
         }
+
+        public async Task<IActionResult> Get(int articulId, int personId)
+        {
+            await articulService.GetArticul(articulId, personId);
+            return RedirectToAction("All");
+        }
+
     }
 }

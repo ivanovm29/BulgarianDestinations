@@ -29,6 +29,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [Column(TypeName ="decimal(18,2)")]
         public decimal Price { get; set; }
 
-        public ICollection<ArticulOrder> ArticulOrders { get; set; } = new List<ArticulOrder>();
+        public ICollection<ArticulPerson> ArticulsPersons { get; set; } = new List<ArticulPerson>();
     }
 }

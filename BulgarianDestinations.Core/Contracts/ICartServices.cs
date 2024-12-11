@@ -1,5 +1,4 @@
 ﻿using BulgarianDestinations.Core.Models.Articul;
-using BulgarianDestinations.Core.Models.Comment;
 using BulgarianDestinations.Core.Models.Destination;
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,10 @@ using System.Threading.Tasks;
 
 namespace BulgarianDestinations.Core.Contracts
 {
-    public interface IArticulService
+    public interface ICartServices
     {
-        Task<IEnumerable<ArticulViewModel>> All();
+        Task<IEnumerable<ArticulViewModel>> All(int personId);
 
-        Task<ArticulViewModel> ArticulInformation(int id);
-
-        Task GetArticul(int articulId, int personId);
+        Task RemoveArticul(int articulId, int personId);
     }
 }

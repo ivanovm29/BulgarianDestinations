@@ -52,5 +52,15 @@ namespace BulgarianDestinations.Core.Services
                 .FirstOrDefaultAsync();
             return articul;
         }
+
+        public async Task GetArticul(int articulId, int personId)
+        {
+            await repository.AddAsync<ArticulPerson>(new ArticulPerson
+            {
+                ArticulId = articulId,
+                PersonId = personId
+            });
+            await repository.SaveChangesAsync();
+        }
     }
 }

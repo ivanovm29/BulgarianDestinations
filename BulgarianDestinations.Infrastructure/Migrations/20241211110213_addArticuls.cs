@@ -328,25 +328,25 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticulOrder",
+                name: "ArticulPerson",
                 columns: table => new
                 {
                     ArticulId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    PersonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticulOrder", x => new { x.ArticulId, x.OrderId });
+                    table.PrimaryKey("PK_ArticulPerson", x => new { x.ArticulId, x.PersonId });
                     table.ForeignKey(
-                        name: "FK_ArticulOrder_Articuls_ArticulId",
+                        name: "FK_ArticulPerson_Articuls_ArticulId",
                         column: x => x.ArticulId,
                         principalTable: "Articuls",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ArticulOrder_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
+                        name: "FK_ArticulPerson_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -481,9 +481,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticulOrder_OrderId",
-                table: "ArticulOrder",
-                column: "OrderId");
+                name: "IX_ArticulPerson_PersonId",
+                table: "ArticulPerson",
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articuls_OrderId",
@@ -568,7 +568,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticulOrder");
+                name: "ArticulPerson");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

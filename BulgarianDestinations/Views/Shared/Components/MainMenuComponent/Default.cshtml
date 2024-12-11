@@ -1,4 +1,9 @@
-﻿<ul>
+﻿@inject ICommentService commentService
+@{
+    int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+}
+<ul>
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Начало<br></a></li>
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Карта</a></li>
     <li class="dropdown">
@@ -35,4 +40,5 @@
         </ul>
     </li>
     <li><a asp-area="" asp-controller="Articul" asp-action="All">Артикули</a></li>
+    <li><a asp-area="" asp-controller="Cart" asp-action="All" asp-route-personid="@personId">Количка</a></li>
 </ul>

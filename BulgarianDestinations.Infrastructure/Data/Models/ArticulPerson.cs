@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulgarianDestinations.Infrastructure.Data.Models
 {
-    public class ArticulOrder
+    public class ArticulPerson
     {
         [Required]
         public int ArticulId { get; set; }
@@ -17,9 +17,9 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         public Articul Articul { get; set; } = null!;
 
         [Required]
-        public int OrderId { get; set; }
+        public int PersonId { get; set; }
 
-        [ForeignKey(nameof(OrderId))]
-        public Order Order { get; set; } = null!;
+        [ForeignKey(nameof(PersonId))]
+        public Person Person { get; set; } = null!;
     }
 }
