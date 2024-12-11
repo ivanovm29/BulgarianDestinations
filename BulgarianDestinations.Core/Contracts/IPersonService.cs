@@ -21,5 +21,7 @@ namespace BulgarianDestinations.Core.Contracts
 
         Task<int> GetPercentBulgaria(int personId);
 
+        Task<int> GetPercentRegion(int personId, int regionId);
+
     }
 }

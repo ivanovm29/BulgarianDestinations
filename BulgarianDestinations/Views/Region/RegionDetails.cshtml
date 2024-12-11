@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<DestinationViewModel>
 @inject IRegionService regionService
+@inject IDestinationService destinationService
+@inject ICommentService commentService
 @{
-    ViewData["Title"] = "Region";
     var destinations = Model.ToList();
     var regionId = int.Parse(Context.Request.Query["regionid"]);
     string regionName = await regionService.GetName(regionId);
+    ViewData["Title"] = regionName;
+    int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
 }
 
 <div class="row" id="info-top">
@@ -16,7 +20,7 @@
 @for (int i = 0; i < destinations.Count(); i++)
 {
     var destination = destinations[i];
-
+    bool isContain = await destinationService.IsContain(destination.Id, personId);
     <div class="row align-items-center @(i == 0 ? "active" : string.Empty)" >
     <div class="col-md-4" id="block-oblast">
             <a asp-area="" asp-controller="Destination" asp-action="Details" asp-route-id="@destination.Id">
@@ -25,8 +29,18 @@
                     <h2 class="kurale-regular">@destination.Name</h2>
                 </div>
                 <div class="col-3 text-end">
-                    <h1><i class="bi bi-check-square-fill" id="check-yes"></i></h1>
-                </div>
+                        @{
+                            if (isContain)
+                            {
+                                <h1><i class="bi bi-check-square-fill" id="check-yes"></i></h1>
+                            }
+                            else
+                            {
+                                <h1><i class="bi bi-x-square-fill" id="check-no"></i></h1>
+                            }
+                        }
+                        
+                    </div>
             </div>
         </a>
     </div>

@@ -37,5 +37,21 @@ namespace BulgarianDestinations.Core.Services
             return destination;
         }
 
+        public async Task<bool> IsContain(int destinationId, int personId)
+        {
+            bool isContain = false;
+
+            var destination = await repository.AllReadOnly<DestinationPerson>()
+                .Where(d => d.PersonId == personId)
+                .Where(d => d.DestinationId == destinationId)
+                .FirstOrDefaultAsync();
+
+            if(destination != null)
+            {
+                isContain = true;
+            }
+                
+            return isContain;
+        }
     }
 }

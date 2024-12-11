@@ -1,14 +1,7 @@
 ﻿using BulgarianDestinations.Core.Contracts;
-using BulgarianDestinations.Core.Models.Destination;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace BulgarianDestinations.Core.Services
 {
@@ -102,5 +95,15 @@ namespace BulgarianDestinations.Core.Services
             return currentPercent;
         }
 
+        public async Task<int> GetPercentRegion(int personId, int regionId)
+        {
+            int total = await repository.All<Destination>().Where(d => d.RegionId == regionId).CountAsync();
+
+            int current = await repository.All<DestinationPerson>().Where(d => d.PersonId == personId).Where(d => d.Destination.RegionId == regionId).CountAsync();
+
+            int currentPercent = (int)((double)current / total * 100);
+
+            return currentPercent;
+        }
     }
 }

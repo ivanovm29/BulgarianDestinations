@@ -20,6 +20,12 @@ namespace BulgarianDestinations.Controllers
             var model = await regionService.GetAll(regionId);
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            var model = await regionService.All();
+            return View(model);
+        }
         
     }
 }

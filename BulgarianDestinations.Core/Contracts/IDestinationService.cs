@@ -10,5 +10,6 @@ namespace BulgarianDestinations.Core.Contracts
     public interface IDestinationService
     {
         Task<DestinationViewModel> DestinationInformation(int id);
+        Task<bool> IsContain(int destinationId, int personId);
     }
 }

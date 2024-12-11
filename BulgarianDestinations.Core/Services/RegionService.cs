@@ -1,5 +1,6 @@
 ﻿using BulgarianDestinations.Core.Contracts;
 using BulgarianDestinations.Core.Models.Destination;
+using BulgarianDestinations.Core.Models.Region;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,19 @@ namespace BulgarianDestinations.Core.Services
         {
             repository = _repository;
         }
+
+        public async Task<IEnumerable<RegionViewModel>> All()
+        {
+            return await repository.AllReadOnly<Region>()
+                .OrderBy(r => r.Name)
+                .Select(r => new RegionViewModel()
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                })
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<DestinationViewModel>> GetAll(int regionId)
         {
             return await repository.All<Destination>()
@@ -32,6 +46,23 @@ namespace BulgarianDestinations.Core.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<string> GetColor(int percent)
+        {
+            string color = "#88a4bc";
+            if (percent > 0 && percent < 100) 
+            {
+                color = "#f7f305";
+            }
+            else if (percent == 100)
+            {
+                color = "#0bc208";
+            }
+
+            return color;
+
+        }
+
         public async Task<string> GetName(int regionId) 
         {
             var region = await repository.AllReadOnly<Region>().FirstOrDefaultAsync(r => r.Id == regionId);
