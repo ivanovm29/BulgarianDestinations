@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210164813_addComment")]
-    partial class addComment
+    [Migration("20241211100137_addArticuls")]
+    partial class addArticuls
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,8 +109,8 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -121,7 +121,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -129,9 +129,50 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Articuls");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Ръкавиците улавят различни дейности като ходене, бягане, колоездене и плуване. С детектор за движение разпознава Вашите промени в движението и  запаметява дейността Ви в.\r\nGarmin vivofit 3 ви подканва да се движите, като записва всяко ваше движение, включително и бездействие. След 1 час без движение червена лента на неактивност се появява на дисплея с лек сигнал. Червената светлина се увеличава на всеки 15 минути, докато не я изчистите, като се разходите в продължение на няколко минути.\r\nVívofit 3 следи Вашия напредък 24/7, благодарение на 1-годишен живот на батерията. Автоматично следи вашата почивка, докато спите. Той е устойчив на вода, така че да можете да го носите в басейна или под душа.",
+                            ImageUrl = "https://i.ibb.co/0Dmhdz1/grivna.jpg",
+                            Name = "Гривна GARMIN Vivofit 3",
+                            Price = 143.00m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.",
+                            ImageUrl = "https://i.ibb.co/q5K7mh6/rakavici.jpg",
+                            Name = "Водоустойчиви термо ръкавици",
+                            Price = 23.00m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.",
+                            ImageUrl = "https://i.ibb.co/BqBxQxB/pompa.jpg",
+                            Name = "Помпа CAO",
+                            Price = 54.50m
+                        });
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
+                {
+                    b.Property<int>("ArticulId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArticulId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ArticulOrder");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
@@ -797,6 +838,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
@@ -1122,9 +1166,28 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Articul", b =>
                 {
-                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", null)
-                        .WithMany("Cart")
-                        .HasForeignKey("PersonId");
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Order", null)
+                        .WithMany("Articuls")
+                        .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
+                {
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Articul", "Articul")
+                        .WithMany("ArticulOrders")
+                        .HasForeignKey("ArticulId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Articul");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
@@ -1268,6 +1331,11 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Articul", b =>
+                {
+                    b.Navigation("ArticulOrders");
+                });
+
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Comment", b =>
                 {
                     b.Navigation("CommentsPersons");
@@ -1280,9 +1348,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.Navigation("DestinationsPersons");
                 });
 
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Person", b =>
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Order", b =>
                 {
-                    b.Navigation("Cart");
+                    b.Navigation("Articuls");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Region", b =>

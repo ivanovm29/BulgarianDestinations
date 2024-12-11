@@ -19,5 +19,10 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [ForeignKey(nameof(PersonId))]
         public Person Person { get; set; } = null!;
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TotalPrice { get; set; }
+
+        public List<Articul> Articuls { get; set; } = new List<Articul>();
+
     }
 }

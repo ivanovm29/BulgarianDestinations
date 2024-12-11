@@ -38,6 +38,14 @@ namespace BulgarianDestinations.Infrastructure.Data
                 .WithMany(s => s.CommentsPersons)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ArticulOrder>()
+                .HasKey(ao => new { ao.ArticulId, ao.OrderId });
+
+            builder.Entity<ArticulOrder>()
+                .HasOne(s => s.Articul)
+                .WithMany(s => s.ArticulOrders)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
 
 

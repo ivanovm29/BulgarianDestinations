@@ -1,0 +1,15 @@
+﻿@model ArticulViewModel
+
+<div class="d-flex justify-content-center">
+    
+        <div class="card" style="width: 36rem;">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">@Model.Description</p>
+            <h5 style="color: #000000">Цена: @Model.Price</h5>
+                <a href="#" class="btn btn-primary">Добави към количката</a>
+            </div>
+        </div>
+    
+</div>
