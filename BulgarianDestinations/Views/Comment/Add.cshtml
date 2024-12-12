@@ -1,5 +1,4 @@
-﻿
-@model CommentViewModel
+﻿@model CommentViewModel
 @inject ICommentService commentService
 @{
     int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);

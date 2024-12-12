@@ -1,4 +1,5 @@
 ﻿using BulgarianDestinations.Core.Models.Destination;
+using BulgarianDestinations.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,9 @@ namespace BulgarianDestinations.Core.Contracts
             int currentPage = 1,
             int destinationsPerPage = 1
             );
+
+        Task AddDestination(DestinationFormViewModel model);
     }
+
+
 }

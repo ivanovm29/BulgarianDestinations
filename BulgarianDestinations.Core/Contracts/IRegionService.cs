@@ -16,5 +16,7 @@ namespace BulgarianDestinations.Core.Contracts
         Task<string> GetName(int regionId);
 
         Task<string> GetColor(int percent);
+
+        Task<IEnumerable<RegionViewModel>> GetCategories();
     }
 }

@@ -11,16 +11,19 @@ namespace BulgarianDestinations.Controllers
     {
         private readonly IDestinationService destinationService;
         private readonly IPersonService personService;
+        private readonly IRegionService regionService;
         private readonly IRepository repository;
 
         public DestinationController(
             IDestinationService _destinationService,
             IPersonService _personService, 
-            IRepository _repository)
+            IRepository _repository,
+            IRegionService _regionService)
         {
             destinationService = _destinationService;
             personService = _personService;
             repository = _repository;
+            regionService = _regionService;
         }
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -65,6 +68,22 @@ namespace BulgarianDestinations.Controllers
             query.Regions = await destinationService.AllRegionsNameAsync();
 
             return View(query);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new DestinationFormViewModel();
+            model.Regions = await regionService.GetCategories();
+            return View(model);
+        }
+
+        public async Task<IActionResult> Add(DestinationFormViewModel model)
+        {
+            await destinationService.AddDestination(model);
+
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

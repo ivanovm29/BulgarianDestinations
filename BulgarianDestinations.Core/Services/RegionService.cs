@@ -69,5 +69,16 @@ namespace BulgarianDestinations.Core.Services
 
             return region?.Name ?? string.Empty;
         }
+
+        public async Task<IEnumerable<RegionViewModel>> GetCategories()
+        {
+            return await repository.AllReadOnly<Region>()
+                .Select(c => new RegionViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToListAsync();
+        }
     }
 }

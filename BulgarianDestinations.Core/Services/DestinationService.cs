@@ -101,5 +101,19 @@ namespace BulgarianDestinations.Core.Services
             };
                 
         }
+
+        public async Task AddDestination(DestinationFormViewModel model)
+        {
+            var destination = new Destination()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                RegionId = model.RegionId
+            };
+
+            await repository.AddAsync<Destination>(destination);
+            await repository.SaveChangesAsync();
+        }
     }
 }
