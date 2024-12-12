@@ -121,6 +121,16 @@ namespace BulgarianDestinations.Core.Services
             var destination = await repository.GetById<Destination>(id);
             if (destination != null)
             {
+                var comments = await repository.AllReadOnly<Comment>().Where(c => c.DestinationId == id).ToListAsync();
+
+                if(comments != null)
+                {
+                    foreach (var comment in comments)
+                    {
+                        await repository.DeleteObjectAsync(comment);
+                    }
+                }
+
                 var destinationsPersons = await repository.AllReadOnly<DestinationPerson>().Where(d => d.DestinationId == id).ToListAsync();
                 if(destinationsPersons != null)
                 {
