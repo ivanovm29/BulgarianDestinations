@@ -1,4 +1,5 @@
 ﻿using BulgarianDestinations.Core.Contracts;
+using BulgarianDestinations.Core.Models.Destination;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,22 @@ namespace BulgarianDestinations.Controllers
                 .FirstOrDefault();
 
             return person.Id;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search([FromQuery]AllDestinationsQueryModel query)
+        {
+            var model = await destinationService.SearchAsync(
+                query.Region,
+                query.SearchTerm,
+                query.CurrentPage,
+                query.DestinationsPerPage
+                );
+            query.TotalDestinationsCount = model.TotalDestinationsCount;
+            query.Destinations = model.Destinations;
+            query.Regions = await destinationService.AllRegionsNameAsync();
+
+            return View(query);
         }
     }
 }

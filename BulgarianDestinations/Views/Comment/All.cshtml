@@ -26,13 +26,15 @@
                 </div>
                 @if(comment.PersonId == personId)
                 {
-                    <div class="col-md-6 text-center">
-                            <a asp-controller="Comment" asp-action="Delete" asp-route-commentid="@comment.Id" asp-route-destinationid="@comment.DestinationId" class="btn btn-success" id="button" role="button">
-                            <h2>Отмени</h2>
+                    <div class="col-md-6" style="margin-top: 3rem">
+                            <a asp-controller="Comment" asp-action="Delete" asp-route-commentid="@comment.Id" asp-route-destinationid="@comment.DestinationId" class="btn btn-danger" role="button">
+                            <h5 style="margin: 0">Изтрий</h5>
                         </a>
                     </div>
                 }
+                    <hr>
             </li>
+             
             }
         </ul>
         

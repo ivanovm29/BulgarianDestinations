@@ -1,0 +1,30 @@
+﻿@model DestinationServiceModel
+@inject IDestinationService destinationService
+@inject ICommentService commentService
+@{
+    int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+}
+<div class="row align-items-center">
+    <div class="col-md-4" id="block-oblast">
+        <a asp-area="" asp-controller="Destination" asp-action="Details" asp-route-id="@Model.DestinationId">
+            <div class="row">
+                <div class="col-9 zoom">
+                    <h2 class="kurale-regular">@Model.Name</h2>
+                </div>
+                <div class="col-3 text-end">
+                    @{
+                        if (await destinationService.IsContain(Model.DestinationId, personId))
+                        {
+                            <h1><i class="bi bi-check-square-fill" id="check-yes"></i></h1>
+                        }
+                        else
+                        {
+                            <h1><i class="bi bi-x-square-fill" id="check-no"></i></h1>
+                        }
+                    }
+
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

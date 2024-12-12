@@ -11,5 +11,14 @@ namespace BulgarianDestinations.Core.Contracts
     {
         Task<DestinationViewModel> DestinationInformation(int id);
         Task<bool> IsContain(int destinationId, int personId);
+
+        Task<IEnumerable<string>> AllRegionsNameAsync();
+
+        Task<DestinationQueryServiceModel> SearchAsync(
+            string? region = null,
+            string? searchTerm = null,
+            int currentPage = 1,
+            int destinationsPerPage = 1
+            );
     }
 }

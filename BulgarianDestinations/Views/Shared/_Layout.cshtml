@@ -32,12 +32,9 @@
                 <h1 class="sitename">BulgarianDestinations</h1>
             </a>
 
-            <nav id="navmenu" class="navmenu">
                 @await Component.InvokeAsync(nameof(MainMenuComponent))
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
 
-            <div id="navmenu" class="navmenu">
+            <div >
                 <partial name="_LoginPartial" />
             </div>
 

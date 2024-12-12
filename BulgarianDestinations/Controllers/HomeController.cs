@@ -25,6 +25,7 @@ namespace BulgarianDestinations.Controllers
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> RegionDetails(int regionId)
         {

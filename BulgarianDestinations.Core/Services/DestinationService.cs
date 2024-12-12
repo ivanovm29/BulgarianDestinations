@@ -53,5 +53,53 @@ namespace BulgarianDestinations.Core.Services
                 
             return isContain;
         }
+
+        public async Task<IEnumerable<string>> AllRegionsNameAsync()
+        {
+            return await repository.AllReadOnly<Region>()
+                .Select(r => r.Name)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<DestinationQueryServiceModel> SearchAsync(string? region = null, string? searchTerm = null, int currentPage = 1, int destinationsPerPage = 1)
+        {
+            var destinationsToShow = repository.AllReadOnly<Destination>().OrderBy(d => d.Name);
+
+            if(region != null)
+            {
+                destinationsToShow = destinationsToShow
+                    .Where(d => d.Region.Name == region)
+					.OrderBy(d => d.Name);
+            }
+
+            if (searchTerm != null)
+            {
+                string normalizedSearchTerm = searchTerm.ToLower();
+                destinationsToShow = destinationsToShow
+                    .Where(d => d.Name.ToLower().Contains(normalizedSearchTerm))
+                    .OrderBy(d => d.Name);
+            }
+
+            var destinations = await destinationsToShow
+                .Skip((currentPage - 1) * destinationsPerPage)
+                .Take(destinationsPerPage)
+                .Select(d => new DestinationServiceModel()
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    DestinationId = d.Id
+                })
+                .ToListAsync();
+
+            int totalDestinations = await destinationsToShow.CountAsync();
+
+            return new DestinationQueryServiceModel()
+            {
+                Destinations = destinations,
+                TotalDestinationsCount = totalDestinations
+            };
+                
+        }
     }
 }
