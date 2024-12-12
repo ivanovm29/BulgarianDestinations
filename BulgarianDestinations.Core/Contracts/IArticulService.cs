@@ -16,5 +16,9 @@ namespace BulgarianDestinations.Core.Contracts
         Task<ArticulViewModel> ArticulInformation(int id);
 
         Task GetArticul(int articulId, int personId);
+
+        Task AddArticul(ArticulFormViewModel model);
+
+        Task DeleteArticul(int id);
     }
 }

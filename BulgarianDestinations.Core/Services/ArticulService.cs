@@ -62,5 +62,39 @@ namespace BulgarianDestinations.Core.Services
             });
             await repository.SaveChangesAsync();
         }
+
+        public async Task AddArticul(ArticulFormViewModel model)
+        {
+            var articul = new Articul()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                Price = model.Price,
+            };
+
+            await repository.AddAsync<Articul>(articul);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteArticul(int id)
+        {
+            var articul = await repository.GetById<Articul>(id);
+            if (articul != null)
+            {
+
+                var articulssPersons = await repository.AllReadOnly<ArticulPerson>().Where(a => a.ArticulId == id).ToListAsync();
+                if (articulssPersons != null)
+                {
+                    foreach (var articulPerson in articulssPersons)
+                    {
+                        await repository.DeleteObjectAsync(articulPerson);
+                    }
+                }
+
+                await repository.DeleteAsync<Articul>(id);
+                await repository.SaveChangesAsync();
+            }
+        }
     }
 }

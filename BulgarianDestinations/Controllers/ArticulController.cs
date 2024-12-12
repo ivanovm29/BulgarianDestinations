@@ -1,4 +1,7 @@
 ﻿using BulgarianDestinations.Core.Contracts;
+using BulgarianDestinations.Core.Models.Articul;
+using BulgarianDestinations.Core.Models.Destination;
+using BulgarianDestinations.Core.Services;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +33,30 @@ namespace BulgarianDestinations.Controllers
         {
             await articulService.GetArticul(articulId, personId);
             return RedirectToAction("All");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = new ArticulFormViewModel();
+            return View(model);
+        }
+
+        public async Task<IActionResult> Add(ArticulFormViewModel model)
+        {
+            await articulService.AddArticul(model);
+
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            await articulService.DeleteArticul(id);
+
+            return RedirectToAction("Index", "Home");
         }
 
     }
