@@ -23,6 +23,9 @@ namespace BulgarianDestinations.Core.Contracts
             );
 
         Task AddDestination(DestinationFormViewModel model);
+
+        Task DeleteDestination(int id);
+
     }
 
 

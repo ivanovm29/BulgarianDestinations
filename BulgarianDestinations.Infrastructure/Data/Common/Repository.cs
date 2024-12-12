@@ -40,7 +40,7 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
             return await context.SaveChangesAsync();
         }
 
-        public async Task<T?> GetById<T>(object id) where T : class
+        public async Task<T?> GetById<T>(int id) where T : class
         {
             return await DbSet<T>().FindAsync(id);
         }
@@ -50,7 +50,7 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
             return await DbSet<T>().FindAsync(id, id1);
         }
 
-        public async Task DeleteAsync<T>(object id) where T : class
+        public async Task DeleteAsync<T>(int id) where T : class
         {
             T? entity = await GetById<T>(id);
 
@@ -67,6 +67,11 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
             {
                 DbSet<T>().Remove(entity);
             }
+        }
+
+        public async Task DeleteObjectAsync<T>(T entity) where T : class
+        {            
+           DbSet<T>().RemoveRange(entity);
         }
     }
 }

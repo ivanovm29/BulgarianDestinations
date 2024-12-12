@@ -85,5 +85,14 @@ namespace BulgarianDestinations.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            await destinationService.DeleteDestination(id);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

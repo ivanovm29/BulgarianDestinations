@@ -115,5 +115,24 @@ namespace BulgarianDestinations.Core.Services
             await repository.AddAsync<Destination>(destination);
             await repository.SaveChangesAsync();
         }
+
+        public async Task DeleteDestination(int id)
+        {
+            var destination = await repository.GetById<Destination>(id);
+            if (destination != null)
+            {
+                var destinationsPersons = await repository.AllReadOnly<DestinationPerson>().Where(d => d.DestinationId == id).ToListAsync();
+                if(destinationsPersons != null)
+                {
+                    foreach (var destinationPerson in destinationsPersons)
+                    {
+                        await repository.DeleteObjectAsync(destinationPerson);
+                    }
+                }
+
+                await repository.DeleteAsync<Destination>(id);
+                await repository.SaveChangesAsync();
+            }
+        }
     }
 }
