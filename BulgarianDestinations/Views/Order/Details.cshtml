@@ -21,7 +21,7 @@
             <h2>Обща цена: @Model.TotalPrice </h2>
         </div>
         <div class="col-md-6 text-center">
-            <a asp-controller="Cart" asp-action="Order" asp-route-personid="" class="btn btn-success" id="button" role="button">
+            <a asp-controller="Order" asp-action="Delete" asp-route-id="@Model.OrderId" class="btn btn-success" id="button" role="button">
                 <h2>Поръчай</h2>
             </a>
         </div>

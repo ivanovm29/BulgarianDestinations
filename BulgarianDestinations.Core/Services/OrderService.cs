@@ -41,7 +41,7 @@ namespace BulgarianDestinations.Core.Services
                 .ToList();
         }
         public async Task<OrderDeatilsViewModel> OrderInformation(int orderId)
-        { 
+        {
             var order = repository
                 .All<Order>()
                 .Where(d => d.Id == orderId)
@@ -59,27 +59,37 @@ namespace BulgarianDestinations.Core.Services
 
             var aos = await repository.AllReadOnly<ArticulOrder>().Where(o => o.OrderId == orderId).ToListAsync();
             var articuls = repository.AllReadOnly<Articul>().ToList();
-            
-                foreach (var ao in aos)
-                {
-                    
-                        if (ao.OrderId == orderId)
-                        {
-                            var articul = repository.AllReadOnly<Articul>().Where(a => a.Id == ao.ArticulId).FirstOrDefault();
-                            var articulView = new ArticulViewModel()
-                            {
-                                Id = articul.Id,
-                                Name = articul.Name,
-                                Description = articul.Description,
-                                ImageUrl = articul.ImageUrl,
-                                Price = articul.Price
 
-                            };
-                            order.Articuls.Add(articulView);
-                        }
+            foreach (var ao in aos)
+            {
+
+                if (ao.OrderId == orderId)
+                {
+                    var articul = repository.AllReadOnly<Articul>().Where(a => a.Id == ao.ArticulId).FirstOrDefault();
+                    var articulView = new ArticulViewModel()
+                    {
+                        Id = articul.Id,
+                        Name = articul.Name,
+                        Description = articul.Description,
+                        ImageUrl = articul.ImageUrl,
+                        Price = articul.Price
+
+                    };
+                    order.Articuls.Add(articulView);
                 }
+            }
 
             return order;
+        }
+
+        public async Task DeleteOrder(int orderId)
+        {
+            var order = await repository.GetById<Order>(orderId);
+            if (order != null)
+            {
+                await repository.DeleteObjectAsync<Order>(order);
+                await repository.SaveChangesAsync();
+            }
         }
     }
 }

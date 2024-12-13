@@ -12,5 +12,7 @@ namespace BulgarianDestinations.Core.Contracts
         Task<IEnumerable<OrderViewModel>> All();
 
         Task<OrderDeatilsViewModel> OrderInformation(int orderId);
+
+        Task DeleteOrder(int orderId);
     }
 }

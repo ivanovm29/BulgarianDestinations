@@ -27,6 +27,14 @@ namespace BulgarianDestinations.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
 
+            await orderService.DeleteOrder(id);
+
+            return RedirectToAction("Index", "Home");
+
+        }
     }
 }
