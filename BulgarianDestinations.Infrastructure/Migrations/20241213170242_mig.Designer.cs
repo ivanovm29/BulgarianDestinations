@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241211110213_addArticuls")]
-    partial class addArticuls
+    [Migration("20241213170242_mig")]
+    partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,15 +121,10 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Articuls");
 
@@ -158,6 +153,21 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                             Name = "Помпа CAO",
                             Price = 54.50m
                         });
+                });
+
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
+                {
+                    b.Property<int>("ArticulId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArticulId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ArticulOrder");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulPerson", b =>
@@ -843,8 +853,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
-
                     b.ToTable("Orders");
                 });
 
@@ -1164,11 +1172,23 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Articul", b =>
+            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulOrder", b =>
                 {
-                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Order", null)
-                        .WithMany("Articuls")
-                        .HasForeignKey("OrderId");
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Articul", "Articuls")
+                        .WithMany()
+                        .HasForeignKey("ArticulId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Order", "Orders")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Articuls");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.ArticulPerson", b =>
@@ -1258,17 +1278,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Order", b =>
-                {
-                    b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Person", b =>
                 {
                     b.HasOne("BulgarianDestinations.Infrastructure.Data.Models.ApplicationUser", "User")
@@ -1346,11 +1355,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("DestinationsPersons");
-                });
-
-            modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Order", b =>
-                {
-                    b.Navigation("Articuls");
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Region", b =>

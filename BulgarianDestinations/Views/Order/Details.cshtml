@@ -1,0 +1,29 @@
+﻿@model OrderDeatilsViewModel
+@{
+    var articuls = Model.Articuls;
+}
+<div class="row align-items-center">
+
+    @for (int i = 0; i < articuls.Count(); i++)
+    {
+
+        <div class="card" style="width: 12rem; margin: 2rem;">
+            <img class="card-img-top" src="@articuls[i].ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@articuls[i].Name</h5>
+                <h5 style="color: #000000">Цена: @articuls[i].Price</h5>
+            </div>
+        </div>
+    }
+
+    <div class="row" id="info-top">
+        <div class="col-md-6 text-center" id="title-info">
+            <h2>Обща цена: @Model.TotalPrice </h2>
+        </div>
+        <div class="col-md-6 text-center">
+            <a asp-controller="Cart" asp-action="Order" asp-route-personid="" class="btn btn-success" id="button" role="button">
+                <h2>Поръчай</h2>
+            </a>
+        </div>
+    </div>
+</div>

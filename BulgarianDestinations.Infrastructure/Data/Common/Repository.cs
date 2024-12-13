@@ -73,5 +73,15 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
         {            
            DbSet<T>().RemoveRange(entity);
         }
+
+        public async Task DeleteSingleObjectAsync<T>(T entity) where T : class
+        {
+            DbSet<T>().Remove(entity);
+        }
+
+        public async Task<T?> GetByIdString<T>(string id) where T : class
+        {
+            return await DbSet<T>().FindAsync(id);
+        }
     }
 }

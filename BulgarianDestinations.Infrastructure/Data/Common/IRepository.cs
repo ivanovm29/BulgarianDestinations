@@ -23,6 +23,10 @@ namespace BulgarianDestinations.Infrastructure.Data.Common
 
         Task DeleteObjectAsync<T>(T entity) where T : class;
 
+        Task DeleteSingleObjectAsync<T>(T entity) where T : class;
+
         Task DeleteCollectionAsync<T>(int id, int id1) where T : class;
+
+        Task<T?> GetByIdString<T>(string id) where T : class;
     }
 }

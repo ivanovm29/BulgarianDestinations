@@ -1,0 +1,24 @@
+﻿@model IEnumerable<OrderViewModel>
+@{
+    ViewData["Title"] = "Region";
+    var orders = Model.ToList();
+
+}
+
+<div class="row align-items-center">
+    @for (int i = 0; i < orders.Count(); i++)
+    {
+        <div class="row align-items-center @(i == 0 ? "active" : string.Empty)">
+            <div class="col-md-4" id="block-oblast">
+                <a asp-area="" asp-controller="Order" asp-action="Details" asp-route-id="@orders[i].OrderId">
+                    <div class="row">
+                        <div class="col-9 zoom">
+                            <h2 class="kurale-regular">Поръчка номер: @orders[i].OrderId</h2>
+                            <h2 class="kurale-regular">Име: @orders[i].FirstName @orders[i].LastName</h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

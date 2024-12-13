@@ -16,9 +16,6 @@ namespace BulgarianDestinations.Infrastructure.Data.Models
         [Required]
         public int PersonId { get; set; }
 
-        [ForeignKey(nameof(PersonId))]
-        public Person Person { get; set; } = null!;
-
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
 

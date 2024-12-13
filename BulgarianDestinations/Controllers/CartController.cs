@@ -16,9 +16,9 @@ namespace BulgarianDestinations.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> All(int personId)
+        public async Task<IActionResult> All()
         {
-            var model = await cartService.All(personId);
+            var model = await cartService.All();
             return View(model);
         }
 
@@ -26,6 +26,12 @@ namespace BulgarianDestinations.Controllers
         {
             await cartService.RemoveArticul(articulId, personId);
             return RedirectToAction("All", new { personid = personId });
+        }
+
+        public async Task<IActionResult> Order(int personId)
+        {
+            await cartService.OrderArticuls(personId);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

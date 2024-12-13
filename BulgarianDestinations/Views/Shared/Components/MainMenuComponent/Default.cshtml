@@ -1,8 +1,4 @@
-﻿@inject ICommentService commentService
-@{
-    //int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-}
-<nav id="navmenu" class="navmenu">
+﻿<nav id="navmenu" class="navmenu">
 <ul>
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Начало<br></a></li>
     <li><a asp-area="" asp-controller="Home" asp-action="Map">Карта</a></li>
@@ -41,9 +37,10 @@
     </li>
     <li><a asp-area="" asp-controller="Destination" asp-action="Search">Търсене</a></li>
     <li><a asp-area="" asp-controller="Articul" asp-action="All">Артикули</a></li>
-    <li><a asp-area="" asp-controller="Cart" asp-action="All" asp-route-personid="">Количка</a></li>
+        <li><a asp-area="" asp-controller="Cart" asp-action="All">Количка</a></li>
         <li><a asp-area="" asp-controller="Destination" asp-action="Add">Добави дестинация</a></li>
         <li><a asp-area="" asp-controller="Articul" asp-action="Add">Добави Артикул</a></li>
+        <li><a asp-area="" asp-controller="Order" asp-action="All">Поръчки</a></li>
 </ul>
     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
 </nav>

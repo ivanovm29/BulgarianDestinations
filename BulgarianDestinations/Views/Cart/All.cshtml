@@ -11,17 +11,19 @@
 
     @for (int i = 0; i < articuls.Count(); i++)
     {
-
-        <div class="card" style="width: 12rem; margin: 2rem;">
-            <img class="card-img-top" src="@articuls[i].ImageUrl" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@articuls[i].Name</h5>
-                <h5 style="color: #000000">Цена: @articuls[i].Price</h5>
-                <a asp-area="" asp-controller="Cart" asp-action="Remove" asp-route-articulid="@articuls[i].Id" asp-route-personid="@personId" class="btn btn-primary">
-                    Премахни
-                </a>
+        if (articuls[i].PersonId == personId)
+        {
+            <div class="card" style="width: 12rem; margin: 2rem;">
+                <img class="card-img-top" src="@articuls[i].ImageUrl" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@articuls[i].Name</h5>
+                    <h5 style="color: #000000">Цена: @articuls[i].Price</h5>
+                    <a asp-area="" asp-controller="Cart" asp-action="Remove" asp-route-articulid="@articuls[i].Id" asp-route-personid="@personId" class="btn btn-primary">
+                        Премахни
+                    </a>
+                </div>
             </div>
-        </div>
+        }
     }
 
     <div class="row" id="info-top">
@@ -29,7 +31,7 @@
             <h2>Обща цена: @totalPrice </h2>
         </div>
         <div class="col-md-6 text-center">
-            <a class="btn btn-success" id="button" href="#" role="button">
+            <a asp-controller="Cart" asp-action="Order" asp-route-personid="@personId" class="btn btn-success" id="button" role="button">
                 <h2>Поръчай</h2>
             </a>
         </div>

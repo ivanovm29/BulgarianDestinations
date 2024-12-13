@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ICommentService, CommentService> ();
             services.AddScoped<IArticulService, ArticulService> ();
             services.AddScoped<ICartServices, CartServices> ();
+            services.AddScoped<IOrderService, OrderService> ();
 
             return services;
         }

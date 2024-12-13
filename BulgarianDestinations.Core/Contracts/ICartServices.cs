@@ -10,10 +10,12 @@ namespace BulgarianDestinations.Core.Contracts
 {
     public interface ICartServices
     {
-        Task<IEnumerable<ArticulViewModel>> All(int personId);
+        Task<IEnumerable<ArticulViewModel>> All();
 
         Task RemoveArticul(int articulId, int personId);
 
         Task<decimal> TotalPrice(int personId);
+
+        Task OrderArticuls(int personId);
     }
 }

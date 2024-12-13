@@ -2,6 +2,7 @@
 using BulgarianDestinations.Infrastructure.Data.Models.SeedDb;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace BulgarianDestinations.Infrastructure.Data
 {
@@ -46,8 +47,26 @@ namespace BulgarianDestinations.Infrastructure.Data
                 .WithMany(s => s.ArticulsPersons)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ArticulOrder>()
+                .HasKey(bc => new { bc.ArticulId, bc.OrderId });
 
+            builder.Entity<Articul>()
+                .HasMany(s => s.Orders)
+                .WithMany(a => a.Articuls)
+                .UsingEntity<ArticulOrder>();
 
+            //builder.Entity<ArticulOrder>()
+            //    .HasKey(bc => new { bc.ArticulId, bc.OrderId });
+
+            //builder.Entity<ArticulOrder>()
+            //    .HasOne(ao => ao.Articul)
+            //    .WithMany(b => b.ArticulOrder)
+            //    .HasForeignKey(bc => bc.ArticulId);
+
+            //builder.Entity<ArticulOrder>()
+            //    .HasOne(bc => bc.Order)
+            //    .WithMany(c => c.ArticulOrder)
+            //    .HasForeignKey(bc => bc.OrderId);
 
 
             builder.ApplyConfiguration(new RegionConfiguration());
@@ -63,5 +82,9 @@ namespace BulgarianDestinations.Infrastructure.Data
         public DbSet<Articul> Articuls { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Person> People { get; set; } = null!;
+
+        public DbSet<ArticulOrder> ArticulOrder { get; set; } = null!;
+
+
     }
 }

@@ -14,18 +14,18 @@ namespace BulgarianDestinations.Core.Services
         {
             repository = _repository;
         }
-        public async Task<IEnumerable<ArticulViewModel>> All(int personId)
+        public async Task<IEnumerable<ArticulViewModel>> All()
         {
             return await repository.All<ArticulPerson>()
                 .OrderByDescending(d => d.ArticulId)
-                .Where(d => d.PersonId == personId)
                 .Select(d => new ArticulViewModel()
                     {
                     Id = d.Articul.Id,
                     Name = d.Articul.Name,
                     Description = d.Articul.Description,
                     ImageUrl = d.Articul.ImageUrl,
-                    Price = d.Articul.Price
+                    Price = d.Articul.Price,
+                    PersonId = d.PersonId
                 })
                 .ToListAsync();
         }
@@ -49,6 +49,29 @@ namespace BulgarianDestinations.Core.Services
         public async Task RemoveArticul(int articulId, int personId)
         {
             await repository.DeleteCollectionAsync<ArticulPerson>(articulId, personId);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task OrderArticuls(int personId)
+        {
+            var articulsPersons = await repository.All<ArticulPerson>().Where(p => p.PersonId == personId).ToListAsync();
+            var articuls = new List<Articul>();
+            decimal totalPrice = 0;
+            foreach (var item in articulsPersons)
+            {
+                decimal price = repository.GetById<Articul>(item.ArticulId).Result.Price;
+                totalPrice += price;
+                articuls.Add(item.Articul);
+                await repository.DeleteSingleObjectAsync<ArticulPerson>(item);
+            }
+
+            await repository.AddAsync<Order>(new Order()
+            {
+                PersonId = personId,
+                Articuls = articuls,
+                TotalPrice = totalPrice,
+            }) ;
+
             await repository.SaveChangesAsync();
         }
     }

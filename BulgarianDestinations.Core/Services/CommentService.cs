@@ -67,10 +67,15 @@ namespace BulgarianDestinations.Core.Services
         }
         public async Task<int> GetUserId(string userId)
         {
+            int id = 0;
             var person = repository.AllReadOnly<Person>()
                 .Where(p => p.UserId == userId)
                 .FirstOrDefault();
-            return person.Id;
+            if (person != null)
+            {
+                return person.Id;
+            }
+            return id;
         }
 
         public async Task DeleteComment(int commentId)

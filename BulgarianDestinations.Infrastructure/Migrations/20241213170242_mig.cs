@@ -5,10 +5,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
-    public partial class addArticuls : Migration
+    public partial class mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Articuls",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articuls", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -48,6 +64,20 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,6 +219,30 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticulOrder",
+                columns: table => new
+                {
+                    ArticulId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticulOrder", x => new { x.ArticulId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_ArticulOrder_Articuls_ArticulId",
+                        column: x => x.ArticulId,
+                        principalTable: "Articuls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticulOrder_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Destination",
                 columns: table => new
                 {
@@ -211,19 +265,23 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "ArticulPerson",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    ArticulId = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_ArticulPerson", x => new { x.ArticulId, x.PersonId });
                     table.ForeignKey(
-                        name: "FK_Orders_People_PersonId",
+                        name: "FK_ArticulPerson_Articuls_ArticulId",
+                        column: x => x.ArticulId,
+                        principalTable: "Articuls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ArticulPerson_People_PersonId",
                         column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
@@ -282,28 +340,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Articuls",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articuls", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Articuls_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CommentPerson",
                 columns: table => new
                 {
@@ -327,38 +363,14 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ArticulPerson",
-                columns: table => new
-                {
-                    ArticulId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticulPerson", x => new { x.ArticulId, x.PersonId });
-                    table.ForeignKey(
-                        name: "FK_ArticulPerson_Articuls_ArticulId",
-                        column: x => x.ArticulId,
-                        principalTable: "Articuls",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ArticulPerson_People_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "People",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Articuls",
-                columns: new[] { "Id", "Description", "ImageUrl", "Name", "OrderId", "Price" },
+                columns: new[] { "Id", "Description", "ImageUrl", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, "Ръкавиците улавят различни дейности като ходене, бягане, колоездене и плуване. С детектор за движение разпознава Вашите промени в движението и  запаметява дейността Ви в.\r\nGarmin vivofit 3 ви подканва да се движите, като записва всяко ваше движение, включително и бездействие. След 1 час без движение червена лента на неактивност се появява на дисплея с лек сигнал. Червената светлина се увеличава на всеки 15 минути, докато не я изчистите, като се разходите в продължение на няколко минути.\r\nVívofit 3 следи Вашия напредък 24/7, благодарение на 1-годишен живот на батерията. Автоматично следи вашата почивка, докато спите. Той е устойчив на вода, така че да можете да го носите в басейна или под душа.", "https://i.ibb.co/0Dmhdz1/grivna.jpg", "Гривна GARMIN Vivofit 3", null, 143.00m },
-                    { 2, "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.", "https://i.ibb.co/q5K7mh6/rakavici.jpg", "Водоустойчиви термо ръкавици", null, 23.00m },
-                    { 3, "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.", "https://i.ibb.co/BqBxQxB/pompa.jpg", "Помпа CAO", null, 54.50m }
+                    { 1, "Ръкавиците улавят различни дейности като ходене, бягане, колоездене и плуване. С детектор за движение разпознава Вашите промени в движението и  запаметява дейността Ви в.\r\nGarmin vivofit 3 ви подканва да се движите, като записва всяко ваше движение, включително и бездействие. След 1 час без движение червена лента на неактивност се появява на дисплея с лек сигнал. Червената светлина се увеличава на всеки 15 минути, докато не я изчистите, като се разходите в продължение на няколко минути.\r\nVívofit 3 следи Вашия напредък 24/7, благодарение на 1-годишен живот на батерията. Автоматично следи вашата почивка, докато спите. Той е устойчив на вода, така че да можете да го носите в басейна или под душа.", "https://i.ibb.co/0Dmhdz1/grivna.jpg", "Гривна GARMIN Vivofit 3", 143.00m },
+                    { 2, "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.", "https://i.ibb.co/q5K7mh6/rakavici.jpg", "Водоустойчиви термо ръкавици", 23.00m },
+                    { 3, "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.", "https://i.ibb.co/BqBxQxB/pompa.jpg", "Помпа CAO", 54.50m }
                 });
 
             migrationBuilder.InsertData(
@@ -481,14 +493,14 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArticulOrder_OrderId",
+                table: "ArticulOrder",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ArticulPerson_PersonId",
                 table: "ArticulPerson",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Articuls_OrderId",
-                table: "Articuls",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -555,11 +567,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PersonId",
-                table: "Orders",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_People_UserId",
                 table: "People",
                 column: "UserId");
@@ -567,6 +574,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ArticulOrder");
+
             migrationBuilder.DropTable(
                 name: "ArticulPerson");
 
@@ -592,6 +602,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                 name: "DestinationPerson");
 
             migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "Articuls");
 
             migrationBuilder.DropTable(
@@ -599,9 +612,6 @@ namespace BulgarianDestinations.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Destination");

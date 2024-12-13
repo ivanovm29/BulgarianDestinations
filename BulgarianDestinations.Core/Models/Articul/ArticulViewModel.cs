@@ -18,5 +18,7 @@ namespace BulgarianDestinations.Core.Models.Articul
 
         public decimal Price { get; set; }
 
+        public int PersonId { get; set; }
+
     }
 }
