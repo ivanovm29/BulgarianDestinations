@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241213170242_mig")]
-    partial class mig
+    [Migration("20241214090854_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,6 +97,26 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "7cb69f1d-5eaa-415d-810c-8ba62611b6a5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "edb446e0-5e4d-47bb-bb0a-5e950c89b44d",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "Adminov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN@MAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAENAUZ5pEAILSFELbPv+LlYy1Mdiwpf9q+pzD1urboaZmNYV9Gzxt7fL0uUmFBwYJow==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7a1fac22-95d3-4352-bcb9-2b9fa975e3ec",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@mail.com"
+                        });
                 });
 
             modelBuilder.Entity("BulgarianDestinations.Infrastructure.Data.Models.Articul", b =>

@@ -12,13 +12,32 @@ namespace BulgarianDestinations.Infrastructure.Data.Models.SeedDb
 
         public SeedData() 
         {
+            SeedUsers();
             SeedRegions();
             SeedDestinations();
             SeedArticuls();
         }
+        public ApplicationUser AdminUser { get; set; }
         public Articul Grivna { get; set; }
         public Articul Rakavici { get; set; }
         public Articul Pompa { get; set; }
+
+        private void SeedUsers()
+        {
+            var hasher = new PasswordHasher<ApplicationUser>();
+
+            AdminUser = new ApplicationUser()
+            {
+                Id = "7cb69f1d-5eaa-415d-810c-8ba62611b6a5",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName = "Admin",
+                LastName = "Adminov"
+            };
+            AdminUser.PasswordHash = hasher.HashPassword(AdminUser, "admin123");
+        }
         private void SeedRegions()
         {
             Blagoevgrad = new Region()
