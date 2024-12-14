@@ -10,7 +10,7 @@ using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Controllers
 {
-    public class CommentController : Controller
+    public class CommentController : BaseController
     {
         private readonly ICommentService commentService;
         private readonly IRepository repository;
@@ -43,7 +43,10 @@ namespace BulgarianDestinations.Controllers
             {
                 return BadRequest();
             }
-
+            if (!ModelState.IsValid) 
+            { 
+                return View(model);
+            }
             await commentService.Add(model, destinationId, GetUserId());
             return RedirectToAction("All", new { destinationId = destinationId });
         }
@@ -78,6 +81,10 @@ namespace BulgarianDestinations.Controllers
             {
                 return BadRequest();
             }
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
 
             var model = await commentService.All(destinationId);
             return View(model);
@@ -90,6 +97,10 @@ namespace BulgarianDestinations.Controllers
             if (await destinationService.Exists(destinationId) == false || await commentService.Exists(commentId) == false)
             {
                 return BadRequest();
+            }
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
 
             await commentService.DeleteComment(commentId);

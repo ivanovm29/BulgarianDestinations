@@ -3,13 +3,14 @@ using BulgarianDestinations.Core.Services;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = AdminRole)]
-    public class OrderController : Controller
+    public class OrderController : AdminBaseController
     {
         private readonly IOrderService orderService;
 
@@ -21,6 +22,10 @@ namespace BulgarianDestinations.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult All()
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = orderService.All();
             return View(model);
         }
@@ -28,6 +33,10 @@ namespace BulgarianDestinations.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             if (await orderService.Exists(id) == false)
             {
                 return BadRequest();
@@ -39,6 +48,10 @@ namespace BulgarianDestinations.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             if (await orderService.Exists(id) == false)
             {
                 return BadRequest();

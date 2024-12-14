@@ -9,7 +9,7 @@ using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Controllers
 {
-    public class DestinationController : Controller
+    public class DestinationController : BaseController
     {
         private readonly IDestinationService destinationService;
         private readonly IPersonService personService;
@@ -46,6 +46,10 @@ namespace BulgarianDestinations.Controllers
             if (await destinationService.Exists(id) == false)
             {
                 return BadRequest();
+            }
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
             }
             var model = await destinationService.DestinationInformation(id);
             return View(model);
@@ -104,6 +108,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchAdmin([FromQuery] AllDestinationsQueryModel query)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = await destinationService.SearchAsync(
                 query.Region,
                 query.SearchTerm,
@@ -122,6 +130,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = new DestinationFormViewModel();
             model.Regions = await regionService.GetCategories();
             return View(model);
@@ -130,6 +142,16 @@ namespace BulgarianDestinations.Controllers
         [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> Add(DestinationFormViewModel model)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.Regions = await regionService.GetCategories();
+                return View(model);
+            }
+
             await destinationService.AddDestination(model);
 
             return RedirectToAction("Index", "Home");
@@ -140,6 +162,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             if (await destinationService.Exists(id) == false)
             {
                 return BadRequest();

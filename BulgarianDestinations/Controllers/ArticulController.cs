@@ -11,7 +11,7 @@ using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Controllers
 {
-    public class ArticulController : Controller
+    public class ArticulController : BaseController
     {
         private readonly IArticulService articulService;
         private readonly IRepository repository;
@@ -35,6 +35,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> AllAdmin()
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = await articulService.All();
             return View(model);
         }
@@ -61,6 +65,10 @@ namespace BulgarianDestinations.Controllers
                 return BadRequest();
             }
 
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = await articulService.ArticulInformation(id);
             return View(model);
         }
@@ -94,6 +102,10 @@ namespace BulgarianDestinations.Controllers
             if (User.IsAdmin() == false)
             {
                 return Unauthorized();
+            }
+            if(!ModelState.IsValid)
+            {
+                return View(model);
             }
             await articulService.AddArticul(model);
 

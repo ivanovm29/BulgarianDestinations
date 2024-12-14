@@ -3,7 +3,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul>
+
 @if (SignInManager.IsSignedIn(User))
 {
 
@@ -22,4 +22,3 @@ else
         <a asp-area="Identity" asp-page="/Account/Login">Влез</a>
     </li>
 }
-</ul>

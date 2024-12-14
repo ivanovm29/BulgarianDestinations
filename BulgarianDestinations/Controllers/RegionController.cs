@@ -3,11 +3,12 @@ using BulgarianDestinations.Core.Models.Region;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.AccessControl;
+using System.Security.Claims;
 using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Controllers
 {
-    public class RegionController: Controller
+    public class RegionController: BaseController
     {
         private readonly IRegionService regionService;
 
@@ -39,6 +40,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> AllAdmin()
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             var model = await regionService.All();
             return View(model);
         }
@@ -48,6 +53,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> DetailsAdmin(int regionId)
         {
+            if (User.IsAdmin() == false)
+            {
+                return Unauthorized();
+            }
             if (await regionService.Exists(regionId) == false)
             {
                 return BadRequest();

@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace BulgarianDestinations.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         private readonly ICartServices cartService;
         private readonly IRepository repository;

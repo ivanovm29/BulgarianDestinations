@@ -9,8 +9,9 @@
     <div class="col-md-12" id="info-text-type">
         
         <form asp-action="Add" asp-route-destinationid="@Model.DestinationId" method="post">
+            <label asp-for="@Model.Text" class="form-label-add-edit"></label>
             <textarea asp-for="@Model.Text"  class="form-control" aria-required="true" rows="5"></textarea>
-
+            <span asp-validation-for="@Model.Text" class="text-danger"></span>
             <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Изпрати" />
 
         </form>

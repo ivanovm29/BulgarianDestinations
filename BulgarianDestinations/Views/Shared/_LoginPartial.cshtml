@@ -3,12 +3,12 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul>
+
 @if (SignInManager.IsSignedIn(User))
 {
 
     <li>
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link">Излез</button>
         </form>
     </li>
@@ -22,4 +22,4 @@ else
         <a asp-area="Identity" asp-page="/Account/Login">Влез</a>
     </li>
 }
-</ul>
+
