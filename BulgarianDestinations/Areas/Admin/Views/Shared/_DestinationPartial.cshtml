@@ -1,0 +1,16 @@
+﻿@model DestinationServiceModel
+@inject IDestinationService destinationService
+@{
+
+}
+<div class="row align-items-center">
+    <div class="col-md-4" id="block-oblast">
+        <a asp-area="Admin" asp-controller="Destination" asp-action="DetailsAdmin" asp-route-id="@Model.DestinationId">
+            <div class="row">
+                <div class="col-9 zoom">
+                    <h2 class="kurale-regular">@Model.Name</h2>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

@@ -38,6 +38,19 @@ namespace BulgarianDestinations.Controllers
             return View(model);
         }
 
+        [Area("Admin")]
+        [Authorize(Roles = AdminRole)]
+        [HttpGet]
+        public async Task<IActionResult> DetailsAdmin(int id)
+        {
+            if (await destinationService.Exists(id) == false)
+            {
+                return BadRequest();
+            }
+            var model = await destinationService.DestinationInformation(id);
+            return View(model);
+        }
+
         public async Task<IActionResult> Join(int destinationId)
         {
             if (await destinationService.Exists(destinationId) == false)
@@ -85,6 +98,25 @@ namespace BulgarianDestinations.Controllers
 
             return View(query);
         }
+
+        [Area("Admin")]
+        [Authorize(Roles = AdminRole)]
+        [HttpGet]
+        public async Task<IActionResult> SearchAdmin([FromQuery] AllDestinationsQueryModel query)
+        {
+            var model = await destinationService.SearchAsync(
+                query.Region,
+                query.SearchTerm,
+                query.CurrentPage,
+                query.DestinationsPerPage
+                );
+            query.TotalDestinationsCount = model.TotalDestinationsCount;
+            query.Destinations = model.Destinations;
+            query.Regions = await destinationService.AllRegionsNameAsync();
+
+            return View(query);
+        }
+
         [Area("Admin")]
         [Authorize(Roles = AdminRole)]
         [HttpGet]
@@ -103,7 +135,8 @@ namespace BulgarianDestinations.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
+        [Area("Admin")]
+        [Authorize(Roles = AdminRole)]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

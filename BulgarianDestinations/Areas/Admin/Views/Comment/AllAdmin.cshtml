@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CommentViewModel>
+@{
+    ViewData["Title"] = "Comment";
+    var comments = Model.ToList();
+    int destinationId = int.Parse(Context.Request.Query["destinationid"]);
+}
+
+<div class="row">
+<div class="col-md-2 text-center">
+    <a asp-area="Admin" asp-controller="Destination" asp-action="DetailsAdmin" asp-route-id="@destinationId" class="btn btn-success" id="button" role="button">
+        <h2>Назад</h2>
+    </a>
+</div>
+</div>
+<div class="row">
+    
+    <div class="col-md-12 text-center" id="info-new-comment">
+        
+            <h2>Коментари</h2>
+        
+    </div>
+    <div class="col-md-12" id="info-comments">
+
+            <ul class="list-unstyled">
+            @for (int i = 0; i < comments.Count(); i++)
+            {
+                var comment = comments[i];
+                var fullName = comment.FirstName + " " + comment.LastName;
+            <li class="media my-4">
+                <div class="media-body">
+                    <h4>@fullName</h4>
+                    @comment.Text
+                </div>
+                <div class="col-md-6" style="margin-top: 3rem">
+                        <a asp-area="Admin" asp-controller="Comment" asp-action="DeleteAdmin" asp-route-commentid="@comment.Id" asp-route-destinationid="@comment.DestinationId" class="btn btn-danger" role="button">
+                            <h5 style="margin: 0">Изтрий</h5>
+                        </a>
+                 </div>
+                <hr>
+            </li>
+             
+            }
+        </ul>
+        
+    </div>
+</div>
+

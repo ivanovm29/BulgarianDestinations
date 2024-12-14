@@ -1,0 +1,38 @@
+﻿@model DestinationViewModel
+@{
+
+    ViewData["Title"] = "Region";
+    var destination = Model;
+}
+
+    <div class="row" id="info-top">
+        <div class="col-md-6 text-center" id="title-info">
+            <h2>@destination.Name</h2>
+        </div>
+
+    <div class="col-md-6 text-center">
+        <a asp-area="Admin" asp-controller="Destination" asp-action="Delete" asp-route-id="@destination.Id" class="btn btn-danger" id="button" role="button" style="background: #850505">
+            <h2>Изтрий</h2>
+        </a>
+    </div>
+
+    </div>
+
+    <div class="row" id="info-mid">
+        <div class="col-lg-6">
+            <p id="info-text">
+                @destination.Description
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <img src="@destination.ImageUrl" class="img-fluid" id="info-img" alt="">
+        </div>
+    </div>
+
+        <div class="col-md-6 text-center">
+    <a asp-area="Admin" asp-controller="Comment" asp-action="AllAdmin" asp-route-destinationid="@destination.Id" class="btn btn-success" id="button" role="button">
+                <h2>Коментари</h2>
+            </a>
+        </div>
+}
+

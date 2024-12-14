@@ -97,7 +97,7 @@ namespace BulgarianDestinations.Controllers
             }
             await articulService.AddArticul(model);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllAdmin", "Articul");
 
         }
         [Area("Admin")]
@@ -116,7 +116,7 @@ namespace BulgarianDestinations.Controllers
             }
             await articulService.DeleteArticul(id);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllAdmin", "Articul");
         }
 
         public int GetUserId()
