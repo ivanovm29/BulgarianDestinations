@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@articuls[i].Name</h5>
                     <h5 style="color: #000000">Цена: @articuls[i].Price</h5>
-                    <a asp-area="" asp-controller="Cart" asp-action="Remove" asp-route-articulid="@articuls[i].Id" asp-route-personid="@personId" class="btn btn-primary">
+                    <a asp-area="" asp-controller="Cart" asp-action="Remove" asp-route-articulid="@articuls[i].Id" class="btn btn-primary">
                         Премахни
                     </a>
                 </div>
@@ -31,7 +31,7 @@
             <h2>Обща цена: @totalPrice </h2>
         </div>
         <div class="col-md-6 text-center">
-            <a asp-controller="Cart" asp-action="Order" asp-route-personid="@personId" class="btn btn-success" id="button" role="button">
+            <a asp-controller="Cart" asp-action="Order" class="btn btn-success" id="button" role="button">
                 <h2>Поръчай</h2>
             </a>
         </div>

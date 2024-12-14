@@ -4,15 +4,24 @@
     ViewData["Title"] = "Comment";
     var comments = Model.ToList();
     int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    int destinationId = int.Parse(Context.Request.Query["destinationid"]);
 }
 
 <div class="row">
+<div class="col-md-2 text-center">
+    <a asp-area="" asp-controller="Destination" asp-action="Details" asp-route-id="@destinationId" class="btn btn-success" id="button" role="button">
+        <h2>Назад</h2>
+    </a>
+</div>
+</div>
+<div class="row">
     
     <div class="col-md-12 text-center" id="info-new-comment">
-        <h2>Коментари</h2>
+        
+            <h2>Коментари</h2>
+        
     </div>
     <div class="col-md-12" id="info-comments">
-        
 
             <ul class="list-unstyled">
             @for (int i = 0; i < comments.Count(); i++)

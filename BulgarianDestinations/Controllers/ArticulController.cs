@@ -2,19 +2,24 @@
 using BulgarianDestinations.Core.Models.Articul;
 using BulgarianDestinations.Core.Models.Destination;
 using BulgarianDestinations.Core.Services;
+using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BulgarianDestinations.Controllers
 {
     public class ArticulController : Controller
     {
         private readonly IArticulService articulService;
+        private readonly IRepository repository;
 
         public ArticulController(
-            IArticulService _articulService)
+            IArticulService _articulService,
+            IRepository _repository)
         {
             articulService = _articulService;
+            repository = _repository;
         }
         [HttpGet]
         public async Task<IActionResult> All()
@@ -29,9 +34,9 @@ namespace BulgarianDestinations.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Get(int articulId, int personId)
+        public async Task<IActionResult> Get(int articulId)
         {
-            await articulService.GetArticul(articulId, personId);
+            await articulService.GetArticul(articulId, GetUserId());
             return RedirectToAction("All");
         }
 
@@ -57,6 +62,17 @@ namespace BulgarianDestinations.Controllers
             await articulService.DeleteArticul(id);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public int GetUserId()
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+
+            var person = repository.AllReadOnly<Person>()
+                .Where(p => p.UserId == userId)
+                .FirstOrDefault();
+
+            return person.Id;
         }
 
     }

@@ -1,7 +1,5 @@
 ﻿@model CommentViewModel
-@inject ICommentService commentService
 @{
-    int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
     
 }
 <div class="row">
@@ -10,7 +8,7 @@
     </div>
     <div class="col-md-12" id="info-text-type">
         
-        <form asp-action="Add" asp-route-destinationid="@Model.DestinationId" asp-route-personid="@Model.PersonId" method="post">
+        <form asp-action="Add" asp-route-destinationid="@Model.DestinationId" method="post">
             <textarea asp-for="@Model.Text"  class="form-control" aria-required="true" rows="5"></textarea>
 
             <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Изпрати" />
