@@ -9,10 +9,12 @@ namespace BulgarianDestinations.Core.Contracts
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderViewModel>> All();
+        IEnumerable<OrderViewModel> All();
 
         Task<OrderDeatilsViewModel> OrderInformation(int orderId);
 
         Task DeleteOrder(int orderId);
+
+        Task<bool> Exists(int id);
     }
 }

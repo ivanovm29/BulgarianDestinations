@@ -12,36 +12,58 @@ namespace BulgarianDestinations.Controllers
     {
         private readonly ICommentService commentService;
         private readonly IRepository repository;
+        private readonly IDestinationService destinationService;
 
         public CommentController(
             ICommentService _commentService,
-            IRepository _repository)
+            IRepository _repository,
+            IDestinationService _destinationService)
         {
             commentService = _commentService;
             repository = _repository;
+            destinationService = _destinationService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Add(int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false)
+            {
+                return BadRequest();
+            }
             var model = await commentService.Add(destinationId, GetUserId());
             return View(model);
         }
 
         public async Task<IActionResult> Add(CommentViewModel model, int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false)
+            {
+                return BadRequest();
+            }
+
             await commentService.Add(model, destinationId, GetUserId());
             return RedirectToAction("All", new { destinationId = destinationId });
         }
 
         public async Task<IActionResult> All(int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await commentService.All(destinationId);
             return View(model);
         }
 
         public async Task<IActionResult> Delete(int commentId, int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false || await commentService.Exists(commentId) == false)
+            {
+                return BadRequest();
+            }
+
             await commentService.DeleteComment(commentId);
             return RedirectToAction("All", new { destinationId = destinationId });
         }

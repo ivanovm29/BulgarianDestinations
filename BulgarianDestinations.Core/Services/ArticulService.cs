@@ -37,6 +37,7 @@ namespace BulgarianDestinations.Core.Services
 
         public async Task<ArticulViewModel> ArticulInformation(int id)
         {
+            
             var articul = await repository
                 .All<Articul>()
                 .Where(d => d.Id == id)
@@ -50,6 +51,7 @@ namespace BulgarianDestinations.Core.Services
 
                 })
                 .FirstOrDefaultAsync();
+
             return articul;
         }
 
@@ -95,6 +97,11 @@ namespace BulgarianDestinations.Core.Services
                 await repository.DeleteAsync<Articul>(id);
                 await repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+          return await repository.AllReadOnly<Articul>().Where(a => a.Id == id).AnyAsync();
         }
     }
 }

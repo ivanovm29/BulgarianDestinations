@@ -11,13 +11,16 @@ namespace BulgarianDestinations.Controllers
     {
         private readonly ICartServices cartService;
         private readonly IRepository repository;
+        private readonly IArticulService articulService;
 
         public CartController(
             ICartServices _cartService,
-            IRepository _repository)
+            IRepository _repository,
+            IArticulService _articulService)
         {
             cartService = _cartService;
             repository = _repository;
+            articulService = _articulService;
         }
 
         [HttpGet]
@@ -29,6 +32,10 @@ namespace BulgarianDestinations.Controllers
 
         public async Task<IActionResult> Remove(int articulId)
         {
+            if (await articulService.Exists(articulId) == false)
+            {
+                return BadRequest();
+            }
             await cartService.RemoveArticul(articulId, GetUserId());
             return RedirectToAction("All", new { personid = GetUserId() });
         }

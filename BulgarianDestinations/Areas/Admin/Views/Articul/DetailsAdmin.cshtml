@@ -1,0 +1,18 @@
+﻿@model ArticulViewModel
+@{
+    ViewData["Title"] = "Articuls";
+}
+int personId = await commentService.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+<div class="d-flex justify-content-center">
+    
+        <div class="card" style="width: 36rem;">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">@Model.Description</p>
+            <h5 style="color: #000000">Цена: @Model.Price</h5>
+            <a asp-area="Admin" asp-controller="Articul" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Изтрий</a>
+            </div>
+        </div>
+    
+</div>

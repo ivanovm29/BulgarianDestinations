@@ -17,6 +17,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> RegionDetails(int regionId)
         {
+            if (await regionService.Exists(regionId) == false)
+            {
+                return BadRequest();
+            }
             var model = await regionService.GetAll(regionId);
             return View(model);
         }

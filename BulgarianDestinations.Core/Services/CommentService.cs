@@ -55,12 +55,6 @@ namespace BulgarianDestinations.Core.Services
             };
 
             await repository.AddAsync(comment);
-            //int commentId = repository.AllReadOnly<Comment>().Count() + 1;
-            //await repository.AddAsync<CommentPerson>(new CommentPerson
-            //{
-            //    CommentId = commentId,
-            //    PersonId = personId
-            //});
 
             await repository.SaveChangesAsync();
 
@@ -81,13 +75,16 @@ namespace BulgarianDestinations.Core.Services
         public async Task DeleteComment(int commentId)
         {
 
-                //var dp = repository.GetByIdCollection<DestinationPerson>(destinationId, personId);
-
                 await repository.DeleteAsync<Comment>(commentId);
 
                 await repository.SaveChangesAsync();
 
             
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await repository.AllReadOnly<Comment>().Where(a => a.Id == id).AnyAsync();
         }
     }
 }

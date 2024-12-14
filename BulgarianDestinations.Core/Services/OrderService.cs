@@ -26,7 +26,7 @@ namespace BulgarianDestinations.Core.Services
             repository = _repository;
             context = _context;
         }
-        public async Task<IEnumerable<OrderViewModel>> All()
+        public IEnumerable<OrderViewModel> All()
         {
 
             return repository.AllReadOnly<Order>()
@@ -90,6 +90,11 @@ namespace BulgarianDestinations.Core.Services
                 await repository.DeleteObjectAsync<Order>(order);
                 await repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await repository.AllReadOnly<Order>().Where(a => a.Id == id).AnyAsync();
         }
     }
 }

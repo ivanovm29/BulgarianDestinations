@@ -17,5 +17,7 @@ namespace BulgarianDestinations.Core.Contracts
 
         Task DeleteComment(int commentId);
         Task<int> GetUserId(string userId);
+
+        Task<bool> Exists(int id);
     }
 }

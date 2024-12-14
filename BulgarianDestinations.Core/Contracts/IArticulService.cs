@@ -20,5 +20,7 @@ namespace BulgarianDestinations.Core.Contracts
         Task AddArticul(ArticulFormViewModel model);
 
         Task DeleteArticul(int id);
+
+        Task<bool> Exists(int id);
     }
 }

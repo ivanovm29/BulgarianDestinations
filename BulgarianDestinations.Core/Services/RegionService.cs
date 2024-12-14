@@ -81,5 +81,10 @@ namespace BulgarianDestinations.Core.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<bool> Exists(int id)
+        {
+            return await repository.AllReadOnly<Region>().Where(a => a.Id == id).AnyAsync();
+        }
     }
 }

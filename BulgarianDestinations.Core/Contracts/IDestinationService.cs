@@ -26,6 +26,8 @@ namespace BulgarianDestinations.Core.Contracts
 
         Task DeleteDestination(int id);
 
+        Task<bool> Exists(int id);
+
     }
 
 

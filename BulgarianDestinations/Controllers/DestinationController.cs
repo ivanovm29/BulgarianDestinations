@@ -2,8 +2,10 @@
 using BulgarianDestinations.Core.Models.Destination;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static BulgarianDestinations.Core.Constants.RoleConstants;
 
 namespace BulgarianDestinations.Controllers
 {
@@ -28,18 +30,32 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            if (await destinationService.Exists(id) == false)
+            {
+                return BadRequest();
+            }
             var model = await destinationService.DestinationInformation(id);
             return View(model);
         }
 
         public async Task<IActionResult> Join(int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false)
+            {
+                return BadRequest();
+            }
+
             await personService.GetDestination(destinationId, GetUserId());
             return RedirectToAction("Details", new { id = destinationId });
         }
 
         public async Task<IActionResult> Leave(int destinationId)
         {
+            if (await destinationService.Exists(destinationId) == false)
+            {
+                return BadRequest();
+            }
+
             await personService.GetOutDestination(destinationId, GetUserId());
             return RedirectToAction("Details", new { id = destinationId });
         }
@@ -69,7 +85,8 @@ namespace BulgarianDestinations.Controllers
 
             return View(query);
         }
-
+        [Area("Admin")]
+        [Authorize(Roles = AdminRole)]
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -77,7 +94,8 @@ namespace BulgarianDestinations.Controllers
             model.Regions = await regionService.GetCategories();
             return View(model);
         }
-
+        [Area("Admin")]
+        [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> Add(DestinationFormViewModel model)
         {
             await destinationService.AddDestination(model);
@@ -89,6 +107,10 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            if (await destinationService.Exists(id) == false)
+            {
+                return BadRequest();
+            }
 
             await destinationService.DeleteDestination(id);
 

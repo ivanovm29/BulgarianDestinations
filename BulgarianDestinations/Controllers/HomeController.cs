@@ -1,5 +1,6 @@
 ﻿using BulgarianDestinations.Core.Contracts;
 using BulgarianDestinations.Core.Services;
+using BulgarianDestinations.Infrastructure.Data.Models;
 using BulgarianDestinations.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -29,6 +30,11 @@ namespace BulgarianDestinations.Controllers
         [HttpGet]
         public async Task<IActionResult> RegionDetails(int regionId)
         {
+            if (await regionService.Exists(regionId) == false)
+            {
+                return BadRequest();
+            }
+
             var model = await regionService.GetAll(regionId);
             return View(model);
         }
