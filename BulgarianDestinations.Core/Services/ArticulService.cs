@@ -1,6 +1,7 @@
 ﻿using BulgarianDestinations.Core.Contracts;
 using BulgarianDestinations.Core.Models.Articul;
 using BulgarianDestinations.Core.Models.Destination;
+using BulgarianDestinations.Infrastructure.Data;
 using BulgarianDestinations.Infrastructure.Data.Common;
 using BulgarianDestinations.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace BulgarianDestinations.Core.Services
     public class ArticulService : IArticulService
     {
         private readonly IRepository repository;
+
+
         public ArticulService(IRepository _repository)
         {
             repository = _repository;
