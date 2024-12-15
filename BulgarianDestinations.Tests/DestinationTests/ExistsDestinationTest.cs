@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace BulgarianDestinations.Tests.DestinationTests
 {
+    [TestFixture]
     public class ExistsDestinationTest
     {
         private IEnumerable<Destination> destinations;

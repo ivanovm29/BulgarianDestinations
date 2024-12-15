@@ -83,7 +83,6 @@ namespace BulgarianDestinations.Infrastructure.Data
         public DbSet<Articul> Articuls { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Person> People { get; set; } = null!;
-
         public DbSet<ArticulOrder> ArticulOrder { get; set; } = null!;
 
 

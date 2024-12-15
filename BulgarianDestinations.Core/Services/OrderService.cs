@@ -20,11 +20,9 @@ namespace BulgarianDestinations.Core.Services
     public class OrderService : IOrderService
     {
         private readonly IRepository repository;
-        private readonly ApplicationDbContext context;
-        public OrderService(IRepository _repository, ApplicationDbContext _context)
+        public OrderService(IRepository _repository)
         {
             repository = _repository;
-            context = _context;
         }
         public IEnumerable<OrderViewModel> All()
         {
