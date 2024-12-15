@@ -17,5 +17,6 @@ namespace CreditsAppWithDb.Data
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Region> Regions { get; set; }
     }
 }
