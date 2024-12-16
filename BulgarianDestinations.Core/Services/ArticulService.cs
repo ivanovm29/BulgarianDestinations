@@ -60,12 +60,15 @@ namespace BulgarianDestinations.Core.Services
 
         public async Task GetArticul(int articulId, int personId)
         {
-            await repository.AddAsync<ArticulPerson>(new ArticulPerson
-            {
-                ArticulId = articulId,
-                PersonId = personId
-            });
-            await repository.SaveChangesAsync();
+                if(!await repository.AllReadOnly<ArticulPerson>().Where(a => a.ArticulId == articulId).Where(p => p.PersonId == personId).AnyAsync())
+                {
+                    await repository.AddAsync<ArticulPerson>(new ArticulPerson
+                    {
+                        ArticulId = articulId,
+                        PersonId = personId
+                    });
+                    await repository.SaveChangesAsync();
+                }            
         }
 
         public async Task AddArticul(ArticulFormViewModel model)
