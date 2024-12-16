@@ -48,8 +48,12 @@ namespace BulgarianDestinations.Core.Services
 
         public async Task RemoveArticul(int articulId, int personId)
         {
-            await repository.DeleteCollectionAsync<ArticulPerson>(articulId, personId);
-            await repository.SaveChangesAsync();
+            if (await repository.AllReadOnly<ArticulPerson>().Where(a => a.ArticulId == articulId).Where(p => p.PersonId == personId).AnyAsync())
+            {
+
+                await repository.DeleteCollectionAsync<ArticulPerson>(articulId, personId);
+                await repository.SaveChangesAsync();
+            }
         }
 
         public async Task OrderArticuls(int personId)
