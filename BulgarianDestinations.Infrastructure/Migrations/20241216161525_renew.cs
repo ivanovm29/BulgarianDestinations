@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BulgarianDestinations.Infrastructure.Migrations
 {
-    public partial class mig : Migration
+    public partial class renew : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -372,6 +372,11 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                     { 2, "Комфортни термо ръкавици, изработени от стреч материя, ще ви осигурят чудесна защита от вятър и студ по време на активен спорт. Изработени от водоустойчива материя.\r\nПоказалецът е изработен от материя, проектирана за работа с GPS устройства, смартфони и всякакви тъчскрийни.", "https://i.ibb.co/q5K7mh6/rakavici.jpg", "Водоустойчиви термо ръкавици", 23.00m },
                     { 3, "Лесна и удобна за ползване крачна помпа.\r\nКрачна помпа, лесна за употреба.", "https://i.ibb.co/BqBxQxB/pompa.jpg", "Помпа CAO", 54.50m }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "7cb69f1d-5eaa-415d-810c-8ba62611b6a5", 0, "92155727-2cdb-45ed-befb-2845709f795e", "admin@mail.com", false, "Admin", "Adminov", false, null, "ADMIN@MAIL.COM", "ADMIN@MAIL.COM", "AQAAAAEAACcQAAAAEDHeMT7lk1uACW3pi7Wv2M7WdglxnXDX7pcHG+SqAkmsEwtcTQYwRDYRnjJ1BV4zyg==", null, false, "98bf3b68-5a6a-4e14-a85a-5d22dd78fb77", false, "admin@mail.com" });
 
             migrationBuilder.InsertData(
                 table: "Regions",

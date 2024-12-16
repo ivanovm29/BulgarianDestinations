@@ -101,7 +101,7 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                         {
                             Id = "7cb69f1d-5eaa-415d-810c-8ba62611b6a5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "edb446e0-5e4d-47bb-bb0a-5e950c89b44d",
+                            ConcurrencyStamp = "92155727-2cdb-45ed-befb-2845709f795e",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -109,9 +109,9 @@ namespace BulgarianDestinations.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENAUZ5pEAILSFELbPv+LlYy1Mdiwpf9q+pzD1urboaZmNYV9Gzxt7fL0uUmFBwYJow==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDHeMT7lk1uACW3pi7Wv2M7WdglxnXDX7pcHG+SqAkmsEwtcTQYwRDYRnjJ1BV4zyg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a1fac22-95d3-4352-bcb9-2b9fa975e3ec",
+                            SecurityStamp = "98bf3b68-5a6a-4e14-a85a-5d22dd78fb77",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });

@@ -1,6 +1,5 @@
 ﻿using BulgarianDestinations.Infrastructure.Data;
 using BulgarianDestinations.Infrastructure.Data.Models;
-using CreditsAppWithDb.Data;
 using Microsoft.EntityFrameworkCore;
 
 using System;
